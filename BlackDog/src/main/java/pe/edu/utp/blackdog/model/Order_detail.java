@@ -9,7 +9,36 @@ public class Order_detail {
         this.product = product;
     }
 
-    public Order_detail() {
+    public Order_detail(Builder builder) {
+    }
+
+    //INNER CLASS: BUILDER
+    public static class Builder {
+        private Customer_oder customerOder;
+        private Product product;
+
+        public Builder(Customer_oder customerOder, Product product) {
+            this.customerOder = customerOder;
+            this.product = product;
+        }
+
+        public Order_detail build() {
+            return new Order_detail(this);
+        }
+    }
+
+    // GETTERS
+
+    public Customer_oder getCustomerOder() {
+        return customerOder;
+    }
+    public Product getProduct() {
+        return product;
+    }
+
+    // CREATE INGREDIENT
+    public static Order_detail createOrder(Customer_oder customerOder, Product product){
+        return new Order_detail.Builder(customerOder, product).build();
     }
 
     @Override
@@ -18,21 +47,5 @@ public class Order_detail {
                 "customerOder=" + customerOder +
                 ", product=" + product +
                 '}';
-    }
-
-    public Customer_oder getCustomerOder() {
-        return customerOder;
-    }
-
-    public void setCustomerOder(Customer_oder customerOder) {
-        this.customerOder = customerOder;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
     }
 }

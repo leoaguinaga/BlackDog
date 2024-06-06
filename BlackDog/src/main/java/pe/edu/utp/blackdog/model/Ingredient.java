@@ -1,15 +1,40 @@
 package pe.edu.utp.blackdog.model;
 
+import java.time.LocalDateTime;
+
 public class Ingredient {
     private int ingredient_id;
     private String name;
 
-    public Ingredient(int ingredient_id, String name) {
-        this.ingredient_id = ingredient_id;
-        this.name = name;
+    public Ingredient(Builder builder) {
     }
 
-    public Ingredient() {
+    //INNER CLASS: BUILDER
+    public static class Builder {
+        private int ingredient_id;
+        private String name;
+
+        public Builder(int ingredient_id, String name) {
+            this.ingredient_id = ingredient_id;
+            this.name = name;
+        }
+
+        public Ingredient build() {
+            return new Ingredient(this);
+        }
+    }
+
+    // GETTERS
+    public int getIngredient_id() {
+        return ingredient_id;
+    }
+    public String getName() {
+        return name;
+    }
+
+    // CREATE INGREDIENT
+    public static Ingredient createOrder(int ingredient_id, String name){
+        return new Ingredient.Builder(ingredient_id, name).build();
     }
 
     @Override
@@ -18,21 +43,5 @@ public class Ingredient {
                 "ingredient_id=" + ingredient_id +
                 ", name='" + name + '\'' +
                 '}';
-    }
-
-    public int getIngredient_id() {
-        return ingredient_id;
-    }
-
-    public void setIngredient_id(int ingredient_id) {
-        this.ingredient_id = ingredient_id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

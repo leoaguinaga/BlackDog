@@ -1,5 +1,7 @@
 package pe.edu.utp.blackdog.model;
 
+import java.util.List;
+
 public class Client {
     private long client_id;
     private String first_name;
@@ -7,9 +9,6 @@ public class Client {
     private String phone_number;
     private String email;
     private String pwd;
-
-    public Client() {
-    }
 
     public Client(Builder builder) {
     }
@@ -51,9 +50,13 @@ public class Client {
     public String getEmail() {
         return email;
     }
-
     public String getPwd() {
         return pwd;
+    }
+
+    // CREATE CLIENT
+    public static Client createClient(long client_id, String first_name, String last_name, String phone_number, String email, String pwd){
+        return new Client.Builder(client_id,first_name,last_name,phone_number,email,pwd).build();
     }
 
     @Override
