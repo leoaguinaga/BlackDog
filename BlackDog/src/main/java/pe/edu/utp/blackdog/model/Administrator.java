@@ -40,7 +40,7 @@ public class Administrator {
         return pwd;
     }
 
-    // CREATE CLIENT
+    // CREATE ADMINISTRATOR
     public static Administrator Administrator(long admin_id, String full_name, String email, String pwd){
         return new Builder(admin_id, full_name, email, pwd).build();
     }
