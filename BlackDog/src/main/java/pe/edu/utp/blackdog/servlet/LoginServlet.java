@@ -1,4 +1,6 @@
 package pe.edu.utp.blackdog.servlet;
 
-public class LoginServlet {
+import javax.servlet.http.HttpServlet;
+
+public class LoginServlet extends HttpServlet {
 }
