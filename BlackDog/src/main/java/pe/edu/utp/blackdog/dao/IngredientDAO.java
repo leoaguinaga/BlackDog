@@ -1,4 +1,4 @@
 package pe.edu.utp.blackdog.dao;
 
-public class DaoAdministrator {
+public class IngredientDAO {
 }

@@ -22,4 +22,7 @@ public class AppConfig {
             return rb.getString("pathF");
         }
     }
+    public static String getLogPath(){
+        return rb.getString("logback");
+    }
 }
