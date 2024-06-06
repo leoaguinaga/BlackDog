@@ -40,6 +40,11 @@ public class Administrator {
         return pwd;
     }
 
+    // CREATE CLIENT
+    public static Administrator Administrator(long admin_id, String full_name, String email, String pwd){
+        return new Builder(admin_id, full_name, email, pwd).build();
+    }
+
     @Override
     public String toString() {
         return "Administrator{" +

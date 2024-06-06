@@ -39,20 +39,16 @@ public class Product {
         public Product build(){ return new Product(this);}
     }
 
+    // GETTERS
     public long getProduct_id() { return product_id; }
-
     public String getName() { return name;}
-
     public String getImage() { return image;}
-
     public double getPrice() { return price;}
-
     public Product_Type getProduct_type() { return product_type;}
 
     public static Product createProductWithoutId(String name, String image, double price, Product_Type product_type){
         return new Product.Builder(name, image, price, product_type).build();
     }
-
     public static Product createProduct(long product_id, String name, String image, double price, Product_Type product_type){
         return new Product.Builder(name, image, price, product_type).withProduct_id(product_id).build();
     }
