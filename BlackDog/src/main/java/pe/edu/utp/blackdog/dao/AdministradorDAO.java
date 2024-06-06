@@ -20,7 +20,7 @@ public class AdministradorDAO {
     }
 
     public String getAdministratorNameByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM Administrator WHERE email = ?";
+        String query = "SELECT * FROM administrator WHERE email = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {

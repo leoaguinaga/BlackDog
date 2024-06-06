@@ -24,7 +24,7 @@ public class ClientDAO {
     }
 
     public Client getClientByEmail(String email) throws SQLException {
-        String query = "SELECT * FROM Client WHERE email = ?";
+        String query = "SELECT * FROM client WHERE email = ?";
         Client client = null;
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, email);
@@ -47,7 +47,7 @@ public class ClientDAO {
     }
 
     public void registerClient(Client client) throws SQLException {
-        String query = "INSERT INTO Client (first_name, last_name, phone_number, email, pwd) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO client (first_name, last_name, phone_number, email, pwd) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, client.getFirst_name());
             ps.setString(2, client.getLast_name());
@@ -63,7 +63,7 @@ public class ClientDAO {
 
     public List<Client> getAllClients() throws SQLException {
         List<Client> clients = new ArrayList<>();
-        String query = "SELECT * FROM Client";
+        String query = "SELECT * FROM client";
         try (PreparedStatement ps = cnn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -83,7 +83,7 @@ public class ClientDAO {
     }
 
     public Client getClientById(long client_id) throws SQLException {
-        String query = "SELECT * FROM Client WHERE client_id = ?";
+        String query = "SELECT * FROM client WHERE client_id = ?";
         Client client = null;
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setLong(1, client_id);
@@ -107,7 +107,7 @@ public class ClientDAO {
     }
 
     public void updateClient(Client client, long client_id) throws SQLException {
-        String query = "UPDATE Client SET firstname = ?, lastname = ?, phone = ?, email = ?, pwd = ? WHERE idClient = ?";
+        String query = "UPDATE client SET first_name = ?, last_name = ?, phone_number = ?, email = ?, pwd = ? WHERE client_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, client.getFirst_name());
             ps.setString(2, client.getLast_name());
@@ -120,7 +120,7 @@ public class ClientDAO {
     }
 
     public void deleteClient(long client_id) throws SQLException {
-        String query = "DELETE FROM Client WHERE client_id = ?";
+        String query = "DELETE FROM client WHERE client_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setLong(1, client_id);
             ps.executeUpdate();

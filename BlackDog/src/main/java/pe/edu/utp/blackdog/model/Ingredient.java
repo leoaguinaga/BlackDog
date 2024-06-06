@@ -3,6 +3,7 @@ package pe.edu.utp.blackdog.model;
 public class Ingredient {
     private long ingredient_id;
     private String name;
+    private double price;
 
     public Ingredient(Builder builder) {
     }
@@ -11,10 +12,12 @@ public class Ingredient {
     public static class Builder {
         private long ingredient_id;
         private String name;
+        private double price;
 
-        public Builder(String name) {
+        public Builder(String name, double price) {
             this.ingredient_id = 0;
             this.name = name;
+            this.price = price;
         }
 
         public Builder withIngredient_id(long ingredient_id){
@@ -34,13 +37,14 @@ public class Ingredient {
     public String getName() {
         return name;
     }
+    public double getPrice() {return price;}
 
     // CREATE INGREDIENT
-    public static Ingredient createIngredientWithoutId(String name){
-        return new Ingredient.Builder(name).build();
+    public static Ingredient createIngredientWithoutId(String name, double price){
+        return new Ingredient.Builder(name, price).build();
     }
-    public static Ingredient createIngredient(long ingredient_id, String name){
-        return new Ingredient.Builder(name).withIngredient_id(ingredient_id).build();
+    public static Ingredient createIngredient(long ingredient_id, String name, double price){
+        return new Ingredient.Builder(name, price).withIngredient_id(ingredient_id).build();
     }
 
 
