@@ -1,2 +1,4 @@
-package pe.edu.utp.blackdog.dao;public class Order_detail {
+package pe.edu.utp.blackdog.dao;
+
+public class DaoOrder_detail {
 }

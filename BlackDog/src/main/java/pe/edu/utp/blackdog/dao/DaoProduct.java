@@ -1,2 +1,4 @@
-package pe.edu.utp.blackdog.dao;public class DaoProduct {
+package pe.edu.utp.blackdog.dao;
+
+public class DaoProduct {
 }

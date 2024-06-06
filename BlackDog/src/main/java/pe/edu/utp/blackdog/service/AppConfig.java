@@ -1,4 +1,4 @@
-package pe.edu.utp.jsp1.service;
+package pe.edu.utp.blackdog.service;
 
 import java.util.ResourceBundle;
 

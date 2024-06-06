@@ -1,4 +1,4 @@
-package pe.edu.utp.jsp1.util;
+package pe.edu.utp.blackdog.util;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -16,7 +16,7 @@ public class DataAccessMariaDB {
         Connection conn = null;
         TipoDA tipoDA = TipoDA.CLASS_FORNAME;   // METODO POR DEFECTO
         try {
-            if (tipoDA==TipoDA.DATASOURCE) {
+            if (tipoDA== TipoDA.DATASOURCE) {
                 conn = ((DataSource) InitialContext.doLookup(cnx)).getConnection();
             }else{
                 Class.forName("org.mariadb.jdbc.Driver");
@@ -35,7 +35,7 @@ public class DataAccessMariaDB {
     public static Connection getConnection(TipoDA tipoDA, String cnx) throws SQLException, NamingException {
         Connection conn = null;
         try {
-            if (tipoDA==TipoDA.DATASOURCE) {
+            if (tipoDA== TipoDA.DATASOURCE) {
                 conn = ((DataSource) InitialContext.doLookup(cnx)).getConnection();
             }else{
                 Class.forName("org.mariadb.jdbc.Driver");
