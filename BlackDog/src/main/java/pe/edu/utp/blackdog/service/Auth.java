@@ -1,7 +1,6 @@
-package pe.edu.utp.jsp1.service;
+package pe.edu.utp.blackdog.service;
 
-import pe.edu.utp.jsp1.util.DataAccessMariaDB;
-import pe.edu.utp.jsp1.util.ErrorLog;
+import pe.edu.utp.blackdog.util.DataAccessMariaDB;
 
 import javax.naming.NamingException;
 import java.io.IOException;
@@ -17,7 +16,6 @@ public class Auth {
             throws SQLException, NamingException, IOException {
         String cnx = AppConfig.getConnectionStringCFN();
         String strSQL = String.format("CALL pr_checkUser('%s','%s')", dni, md5(pwd));
-        ErrorLog.log(strSQL, ErrorLog.Level.INFO);
         Connection cnn = DataAccessMariaDB.getConnection(cnx);
         ResultSet rst = cnn.createStatement().executeQuery(strSQL);
         String res = (rst.next()) ? rst.getString("login") : "no_data";
@@ -29,7 +27,6 @@ public class Auth {
             throws SQLException, NamingException, IOException {
         String cnx = AppConfig.getConnectionStringCFN();
         String strSQL = String.format("CALL pr_getUsuarioId('%s','%s')", dni, md5(pwd));
-        ErrorLog.log(strSQL, ErrorLog.Level.INFO);
         Connection cnn = DataAccessMariaDB.getConnection(cnx);
         ResultSet rst = cnn.createStatement().executeQuery(strSQL);
         int usuarioId = (rst.next()) ? rst.getInt("usuario_id") : -1;
@@ -44,7 +41,6 @@ public class Auth {
             msg.update(data.getBytes());
             return byteArrayToHex(msg.digest());
         } catch (CloneNotSupportedException | NoSuchAlgorithmException e) {
-            ErrorLog.log(e.getMessage(), ErrorLog.Level.ERROR);
             return data;
         }
     }

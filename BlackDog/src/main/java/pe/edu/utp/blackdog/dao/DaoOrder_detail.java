@@ -1,4 +1,4 @@
 package pe.edu.utp.blackdog.dao;
-public class DaoOrder_detail {
 
+public class DaoOrder_detail {
 }
