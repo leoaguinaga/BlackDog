@@ -22,13 +22,18 @@ public class Client {
         private String email;
         private String pwd;
 
-        public Builder(long client_id, String first_name, String last_name, String phone_number, String email, String pwd){
-            this.client_id = client_id;
+        public Builder(String first_name, String last_name, String phone_number, String email, String pwd){
+            this.client_id = 0;
             this.first_name = first_name;
             this.last_name = last_name;
             this.phone_number = phone_number;
             this.email = email;
             this.pwd = pwd;
+        }
+
+            public Builder withClient_id(long client_id){
+            this.client_id = client_id;
+            return this;
         }
 
         public Client build(){return new Client(this);}
@@ -56,7 +61,10 @@ public class Client {
 
     // CREATE CLIENT
     public static Client createClient(long client_id, String first_name, String last_name, String phone_number, String email, String pwd){
-        return new Client.Builder(client_id,first_name,last_name,phone_number,email,pwd).build();
+        return new Client.Builder(first_name,last_name,phone_number,email,pwd).withClient_id(client_id).build();
+    }
+    public static Client createClientWithoutId(String first_name, String last_name, String phone_number, String email, String pwd){
+        return new Client.Builder(first_name,last_name,phone_number,email,pwd).build();
     }
 
     @Override

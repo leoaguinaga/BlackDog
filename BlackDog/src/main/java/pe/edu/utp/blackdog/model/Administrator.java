@@ -41,7 +41,7 @@ public class Administrator {
     }
 
     // CREATE ADMINISTRATOR
-    public static Administrator Administrator(long admin_id, String full_name, String email, String pwd){
+    public static Administrator createAdministrator(long admin_id, String full_name, String email, String pwd){
         return new Builder(admin_id, full_name, email, pwd).build();
     }
 

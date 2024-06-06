@@ -28,7 +28,6 @@ public class Order_detail {
     }
 
     // GETTERS
-
     public Customer_oder getCustomerOder() {
         return customerOder;
     }

@@ -24,14 +24,19 @@ public class Customer_oder {
         private State state;
         private String evidence_image;
 
-        public Builder(long customer_order_id, Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image) {
-            this.customer_order_id = customer_order_id;
+        public Builder(Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image) {
+            this.customer_order_id = 0;
             this.client = client;
             this.order_date = order_date;
             this.address = address;
             this.amount = amount;
             this.state = state;
             this.evidence_image = evidence_image;
+        }
+
+        public Builder withCustomer_oder_id(long customer_order_id){
+            this.customer_order_id = customer_order_id;
+            return this;
         }
 
         public Customer_oder build() {
@@ -63,8 +68,11 @@ public class Customer_oder {
     }
 
     // CREATE ORDER
+    public static Customer_oder createOrderWithoutId(Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image){
+        return new Customer_oder.Builder(client,order_date,address,amount,state,evidence_image).build();
+    }
     public static Customer_oder createOrder(long customer_order_id, Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image){
-        return new Customer_oder.Builder(customer_order_id,client,order_date,address,amount,state,evidence_image).build();
+        return new Customer_oder.Builder(client,order_date,address,amount,state,evidence_image).withCustomer_oder_id(customer_order_id).build();
     }
 
     @Override

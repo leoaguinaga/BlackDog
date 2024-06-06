@@ -1,9 +1,7 @@
 package pe.edu.utp.blackdog.model;
 
-import java.time.LocalDateTime;
-
 public class Ingredient {
-    private int ingredient_id;
+    private long ingredient_id;
     private String name;
 
     public Ingredient(Builder builder) {
@@ -11,12 +9,17 @@ public class Ingredient {
 
     //INNER CLASS: BUILDER
     public static class Builder {
-        private int ingredient_id;
+        private long ingredient_id;
         private String name;
 
-        public Builder(int ingredient_id, String name) {
-            this.ingredient_id = ingredient_id;
+        public Builder(String name) {
+            this.ingredient_id = 0;
             this.name = name;
+        }
+
+        public Builder withIngredient_id(long ingredient_id){
+            this.ingredient_id = ingredient_id;
+            return this;
         }
 
         public Ingredient build() {
@@ -25,7 +28,7 @@ public class Ingredient {
     }
 
     // GETTERS
-    public int getIngredient_id() {
+    public long getIngredient_id() {
         return ingredient_id;
     }
     public String getName() {
@@ -33,9 +36,13 @@ public class Ingredient {
     }
 
     // CREATE INGREDIENT
-    public static Ingredient createOrder(int ingredient_id, String name){
-        return new Ingredient.Builder(ingredient_id, name).build();
+    public static Ingredient createIngredientWithoutId(String name){
+        return new Ingredient.Builder(name).build();
     }
+    public static Ingredient createIngredient(long ingredient_id, String name){
+        return new Ingredient.Builder(name).withIngredient_id(ingredient_id).build();
+    }
+
 
     @Override
     public String toString() {
