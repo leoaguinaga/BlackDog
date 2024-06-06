@@ -7,6 +7,10 @@ public class Administrator {
     private String pwd;
 
     public Administrator(Builder builder) {
+        this.admin_id = builder.admin_id;
+        this.full_name = builder.full_name;
+        this.email = builder.email;
+        this.pwd = builder.pwd;
     }
 
     //INNER CLASS: BUILDER

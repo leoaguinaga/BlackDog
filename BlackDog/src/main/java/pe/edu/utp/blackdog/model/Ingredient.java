@@ -7,6 +7,8 @@ public class Ingredient {
     private String name;
 
     public Ingredient(Builder builder) {
+        this.ingredient_id = builder.ingredient_id;
+        this.name = builder.name;
     }
 
     //INNER CLASS: BUILDER

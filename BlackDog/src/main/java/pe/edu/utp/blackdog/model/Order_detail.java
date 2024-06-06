@@ -4,12 +4,9 @@ public class Order_detail {
     private Customer_oder customerOder;
     private Product product;
 
-    public Order_detail(Customer_oder customerOder, Product product) {
-        this.customerOder = customerOder;
-        this.product = product;
-    }
-
     public Order_detail(Builder builder) {
+        this.customerOder = builder.customerOder;
+        this.product = builder.product;
     }
 
     //INNER CLASS: BUILDER
@@ -28,7 +25,6 @@ public class Order_detail {
     }
 
     // GETTERS
-
     public Customer_oder getCustomerOder() {
         return customerOder;
     }

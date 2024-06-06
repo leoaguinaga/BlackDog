@@ -11,6 +11,12 @@ public class Client {
     private String pwd;
 
     public Client(Builder builder) {
+        this.client_id = builder.client_id;
+        this.first_name = builder.first_name;
+        this.last_name = builder.last_name;
+        this.phone_number = builder.phone_number;
+        this.email = builder.email;
+        this.pwd = builder.pwd;
     }
 
     //INNER CLASS: BUILDER

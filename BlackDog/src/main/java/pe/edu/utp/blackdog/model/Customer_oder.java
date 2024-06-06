@@ -12,6 +12,13 @@ public class Customer_oder {
     private String evidence_image;
 
     public Customer_oder(Builder builder) {
+        this.customer_order_id = builder.customer_order_id;
+        this.client = builder.client;
+        this.order_date = builder.order_date;
+        this.address = builder.address;
+        this.amount = builder.amount;
+        this.state = builder.state;
+        this.evidence_image = builder.evidence_image;
     }
 
     //INNER CLASS: BUILDER
