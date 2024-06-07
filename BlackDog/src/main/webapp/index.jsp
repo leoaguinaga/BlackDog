@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello World</title>
+    <title>BlackDog</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
 </head>
 <body>
-<h1><%= "Hello World!" %>
-</h1>
+<h1>Bienvenido a black dog</h1>
 <br/>
-<a href="hello-servlet">Hello Servlet</a>
+<a href="login.jsp">Hello Servlet</a>
 </body>
 </html>

@@ -7,55 +7,70 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Auth {
+public class Auth implements AutoCloseable {
+    private final Connection cnn;
 
-    public static boolean isValidUser(String dni, String pwd)
-            throws SQLException, NamingException, IOException {
-        String cnx = AppConfig.getConnectionStringCFN();
-        String strSQL = String.format("CALL pr_checkUser('%s','%s')", dni, md5(pwd));
-        Connection cnn = DataAccessMariaDB.getConnection(cnx);
-        ResultSet rst = cnn.createStatement().executeQuery(strSQL);
-        String res = (rst.next()) ? rst.getString("login") : "no_data";
-        cnn.close();
-        return !res.equals("no_data");
+    public Auth() throws SQLException, NamingException {
+        this.cnn = DataAccessMariaDB.getConnection(DataAccessMariaDB.TipoDA.DATASOURCE, "java:/MariaDB");
     }
 
-    public static int getUsuarioId(String dni, String pwd)
-            throws SQLException, NamingException, IOException {
-        String cnx = AppConfig.getConnectionStringCFN();
-        String strSQL = String.format("CALL pr_getUsuarioId('%s','%s')", dni, md5(pwd));
-        Connection cnn = DataAccessMariaDB.getConnection(cnx);
-        ResultSet rst = cnn.createStatement().executeQuery(strSQL);
-        int usuarioId = (rst.next()) ? rst.getInt("usuario_id") : -1;
-        cnn.close();
-        return usuarioId;
+    public void close() throws SQLException {
+        if (this.cnn != null) DataAccessMariaDB.closeConnection(this.cnn);
     }
 
     public static String md5(String data) throws IOException {
-        try{
+        try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            MessageDigest msg = (MessageDigest) md.clone();
-            msg.update(data.getBytes());
-            return byteArrayToHex(msg.digest());
-        } catch (CloneNotSupportedException | NoSuchAlgorithmException e) {
-            return data;
+            md.update(data.getBytes());
+            return byteArrayToHex(md.digest());
+        } catch (NoSuchAlgorithmException e) {
+            throw new IOException(e);
         }
     }
 
-    /*
-    * Link: https://stackoverflow.com/questions/9655181/java-convert-a-byte-array-to-a-hex-string
-    * Nota: Metodo altetnativo para JDK17, pero se debe tener cuidado con tener este entorno activado
-    * HexFormat hex = HexFormat.of();
-    * hex.formatHex(someByteArray)
-    * */
     public static String byteArrayToHex(byte[] a) {
         StringBuilder sb = new StringBuilder(a.length * 2);
-        for(byte b: a)
+        for (byte b : a) {
             sb.append(String.format("%02x", b));
+        }
         return sb.toString();
     }
 
+    public boolean isValidAdmin(String email, String password) throws SQLException, IOException {
+        String query = "SELECT * FROM Administrator WHERE email = ? AND pwd = ?";
+        try (PreparedStatement ps = cnn.prepareStatement(query)) {
+            ps.setString(1, email);
+            ps.setString(2, md5(password));
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean isValidClient(String email, String password) throws SQLException, IOException {
+        String query = "SELECT * FROM Client WHERE email = ? AND pwd = ?";
+        try (PreparedStatement ps = cnn.prepareStatement(query)) {
+            ps.setString(1, email);
+            ps.setString(2, md5(password));
+            System.out.println("Email: " + email);
+            System.out.println("Password: " + md5(password));
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public String getTipoUsuario(String email, String password) throws SQLException, IOException {
+        if (isValidAdmin(email, password)) {
+            return "admin";
+        }
+        if (isValidClient(email, password)) {
+            return "client";
+        }
+        return null;
+    }
 }
