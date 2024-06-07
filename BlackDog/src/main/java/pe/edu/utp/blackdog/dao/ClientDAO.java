@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDAO {
+public class ClientDAO implements AutoCloseable {
     private final Connection cnn;
 
     public ClientDAO() throws SQLException, NamingException {
@@ -89,7 +89,7 @@ public class ClientDAO {
             ps.setLong(1, client_id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Client.createClient(
+                    client = Client.createClient(
                             rs.getLong("client_id"),
                             rs.getString("first_name"),
                             rs.getString("last_name"),

@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AdministradorDAO {
+public class AdministradorDAO implements AutoCloseable{
     private final Connection cnn;
 
     public AdministradorDAO() throws SQLException, NamingException {

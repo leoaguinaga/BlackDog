@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IngredientDAO {
+public class IngredientDAO implements AutoCloseable{
     private final Connection cnn;
 
     public IngredientDAO() throws SQLException, NamingException {
@@ -27,7 +27,7 @@ public class IngredientDAO {
         String query = "INSERT INTO ingredient (name, price) VALUES (?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, ingredient.getName());
-            ps.setDouble(1, ingredient.getPrice());
+            ps.setDouble(2, ingredient.getPrice());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0) {
                 throw new SQLException("No se pudo insertar el ingrediente en la base de datos.");
@@ -60,7 +60,7 @@ public class IngredientDAO {
             ps.setLong(1, ingredient_id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Ingredient.createIngredient(
+                    ingredient = Ingredient.createIngredient(
                             rs.getLong("ingredient_id"),
                             rs.getString("name"),
                             rs.getDouble("price")

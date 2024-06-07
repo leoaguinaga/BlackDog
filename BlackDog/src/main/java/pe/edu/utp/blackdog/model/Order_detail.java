@@ -1,10 +1,10 @@
 package pe.edu.utp.blackdog.model;
 
 public class Order_detail {
-    private Customer_oder customerOder;
+    private Customer_order customerOder;
     private Product product;
 
-    public Order_detail(Customer_oder customerOder, Product product) {
+    public Order_detail(Customer_order customerOder, Product product) {
         this.customerOder = customerOder;
         this.product = product;
     }
@@ -14,10 +14,10 @@ public class Order_detail {
 
     //INNER CLASS: BUILDER
     public static class Builder {
-        private Customer_oder customerOder;
+        private Customer_order customerOder;
         private Product product;
 
-        public Builder(Customer_oder customerOder, Product product) {
+        public Builder(Customer_order customerOder, Product product) {
             this.customerOder = customerOder;
             this.product = product;
         }
@@ -28,7 +28,7 @@ public class Order_detail {
     }
 
     // GETTERS
-    public Customer_oder getCustomerOder() {
+    public Customer_order getCustomerOder() {
         return customerOder;
     }
     public Product getProduct() {
@@ -36,7 +36,7 @@ public class Order_detail {
     }
 
     // CREATE INGREDIENT
-    public static Order_detail createOrder(Customer_oder customerOder, Product product){
+    public static Order_detail createOrderDetail(Customer_order customerOder, Product product){
         return new Order_detail.Builder(customerOder, product).build();
     }
 

@@ -2,7 +2,7 @@ package pe.edu.utp.blackdog.model;
 
 import java.time.LocalDateTime;
 
-public class Customer_oder {
+public class Customer_order {
     private long customer_order_id;
     private Client client;
     private LocalDateTime order_date;
@@ -11,7 +11,7 @@ public class Customer_oder {
     private State state;
     private String evidence_image;
 
-    public Customer_oder(Builder builder) {
+    public Customer_order(Builder builder) {
     }
 
     //INNER CLASS: BUILDER
@@ -39,8 +39,8 @@ public class Customer_oder {
             return this;
         }
 
-        public Customer_oder build() {
-            return new Customer_oder(this);
+        public Customer_order build() {
+            return new Customer_order(this);
         }
     }
 
@@ -68,11 +68,11 @@ public class Customer_oder {
     }
 
     // CREATE ORDER
-    public static Customer_oder createOrderWithoutId(Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image){
-        return new Customer_oder.Builder(client,order_date,address,amount,state,evidence_image).build();
+    public static Customer_order createOrderWithoutId(Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image){
+        return new Customer_order.Builder(client,order_date,address,amount,state,evidence_image).build();
     }
-    public static Customer_oder createOrder(long customer_order_id, Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image){
-        return new Customer_oder.Builder(client,order_date,address,amount,state,evidence_image).withCustomer_oder_id(customer_order_id).build();
+    public static Customer_order createOrder(long customer_order_id, Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image){
+        return new Customer_order.Builder(client,order_date,address,amount,state,evidence_image).withCustomer_oder_id(customer_order_id).build();
     }
 
     @Override

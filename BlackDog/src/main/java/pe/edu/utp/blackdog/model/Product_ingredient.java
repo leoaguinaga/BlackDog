@@ -31,6 +31,11 @@ public class Product_ingredient {
 
     public int getQuantity() { return quantity;}
 
+    // CREATE PRODUCT INGREDIENT RELATION
+    public static Product_ingredient createProduct_ingredient(long product_id, long ingredient_id, int quantity){
+        return new Builder(product_id, ingredient_id, quantity).build();
+    }
+
     public static Product_ingredient getProduct_ingredient(long product_id, long ingredient_id, int quantity){
         return new Product_ingredient.Builder(product_id, ingredient_id, quantity).build();
     }
