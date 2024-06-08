@@ -6,6 +6,9 @@ public class Ingredient {
     private double price;
 
     public Ingredient(Builder builder) {
+        this.ingredient_id = builder.ingredient_id;
+        this.name = builder.name;
+        this.price = builder.price;
     }
 
     //INNER CLASS: BUILDER

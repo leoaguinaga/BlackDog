@@ -10,6 +10,8 @@ public class Order_detail {
     }
 
     public Order_detail(Builder builder) {
+        this.customerOder = builder.customerOder;
+        this.product = builder.product;
     }
 
     //INNER CLASS: BUILDER

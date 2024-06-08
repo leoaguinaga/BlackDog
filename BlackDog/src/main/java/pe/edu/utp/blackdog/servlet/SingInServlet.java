@@ -29,9 +29,10 @@ public class SingInServlet extends HttpServlet {
         String phone = req.getParameter("phone");
         String email = req.getParameter("email");
         String pwd = req.getParameter("pwd");
+
+        Client client = Client.createClientWithoutId(firstName, lastName, phone, email, Auth.md5(pwd));
         try {
             ClientDAO clientDAO = new ClientDAO();
-            Client client = Client.createClientWithoutId(firstName, lastName, phone, email, Auth.md5(pwd));
             System.out.println(client);
             clientDAO.registerClient(client);
             clientDAO.close();

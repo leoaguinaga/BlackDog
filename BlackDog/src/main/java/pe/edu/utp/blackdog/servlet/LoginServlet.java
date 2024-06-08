@@ -1,6 +1,8 @@
 package pe.edu.utp.blackdog.servlet;
 
 import pe.edu.utp.blackdog.dao.AdministradorDAO;
+import pe.edu.utp.blackdog.dao.ClientDAO;
+import pe.edu.utp.blackdog.model.Client;
 import pe.edu.utp.blackdog.model.Product;
 import pe.edu.utp.blackdog.service.Auth;
 
@@ -28,13 +30,19 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("email", email);
             session.setAttribute("userType", userType);
+
             if ("admin".equals(userType)) {
                 AdministradorDAO administradorDAO =  new AdministradorDAO();
                 String name = administradorDAO.getAdministratorNameByEmail(email);
                 administradorDAO.close();
                 session.setAttribute("name", name);
-                resp.sendRedirect("admin/Dashboard.jsp");
+                resp.sendRedirect("admin-Dashboard.jsp");
             } else if ("client".equals(userType)) {
+                ClientDAO clientDAO =  new ClientDAO();
+                Client client = clientDAO.getClientByEmail(email);
+                String name = client.getFirst_name();
+                clientDAO.close();
+                session.setAttribute("name", name);
                 resp.sendRedirect("index.jsp");
             }
         } catch (Exception e) {
