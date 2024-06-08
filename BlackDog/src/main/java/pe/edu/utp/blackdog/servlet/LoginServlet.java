@@ -38,11 +38,6 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("name", name);
                 resp.sendRedirect("admin/dashboard.jsp");
             } else if ("client".equals(userType)) {
-                ClientDAO clientDAO =  new ClientDAO();
-                Client client = clientDAO.getClientByEmail(email);
-                String name = client.getFirst_name();
-                clientDAO.close();
-                session.setAttribute("name", name);
                 resp.sendRedirect("index.jsp");
             }
         } catch (Exception e) {

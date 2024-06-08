@@ -41,7 +41,7 @@ public class Auth implements AutoCloseable {
     }
 
     public boolean isValidAdmin(String email, String password) throws SQLException, IOException {
-        String query = "SELECT * FROM Administrator WHERE email = ? AND pwd = ?";
+        String query = "SELECT * FROM administrator WHERE email = ? AND pwd = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, email);
             ps.setString(2, md5(password));
@@ -52,7 +52,7 @@ public class Auth implements AutoCloseable {
     }
 
     public boolean isValidClient(String email, String password) throws SQLException, IOException {
-        String query = "SELECT * FROM Client WHERE email = ? AND pwd = ?";
+        String query = "SELECT * FROM client WHERE email = ? AND pwd = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, email);
             ps.setString(2, md5(password));

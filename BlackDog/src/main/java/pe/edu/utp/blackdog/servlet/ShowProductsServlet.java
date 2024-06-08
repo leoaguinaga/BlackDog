@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/showProducts")
+@WebServlet("/admin/products")
 public class ShowProductsServlet extends HttpServlet {
 
     @Override
@@ -23,7 +23,7 @@ public class ShowProductsServlet extends HttpServlet {
             ProductDAO productDAO = new ProductDAO();
             List<Product> products = productDAO.getAllProducts();
             req.setAttribute("products", products);
-            req.getRequestDispatcher("administrateProducts.jsp").forward(req, resp);
+            req.getRequestDispatcher("products.jsp").forward(req, resp);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
