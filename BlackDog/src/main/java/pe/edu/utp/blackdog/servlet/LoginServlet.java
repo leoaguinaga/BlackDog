@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
                 String name = administradorDAO.getAdministratorNameByEmail(email);
                 administradorDAO.close();
                 session.setAttribute("name", name);
-                resp.sendRedirect("admin-Dashboard.jsp");
+                resp.sendRedirect("admin/dashboard.jsp");
             } else if ("client".equals(userType)) {
                 ClientDAO clientDAO =  new ClientDAO();
                 Client client = clientDAO.getClientByEmail(email);

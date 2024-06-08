@@ -23,7 +23,7 @@ public class ShowProductsServlet extends HttpServlet {
             ProductDAO productDAO = new ProductDAO();
             List<Product> products = productDAO.getAllProducts();
             req.setAttribute("products", products);
-            req.getRequestDispatcher("products.jsp").forward(req, resp);
+            req.getRequestDispatcher("administrateProducts.jsp").forward(req, resp);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

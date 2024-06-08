@@ -14,19 +14,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/logOut")
+@WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
+        this.doPost(req, resp);
+    }
 
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        String usertype = (String) session.getAttribute("userType");
+        if (session != null) {
+            session.invalidate();
+        }
 
-        } catch (Exception e) {
-
+        if ("admin".equals(usertype)) {
+            response.sendRedirect("./index.jsp");
+        } else if ("client".equals(usertype)) {
+            response.sendRedirect("index.jsp");
         }
     }
-
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doGet(req, resp);
-    }
-
 }
