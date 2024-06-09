@@ -49,7 +49,7 @@
                 </table>
             </div>
         </div>
-        <a href="addIngredient.jsp" class="btn btn-success btn-icon-split">
+        <a href="addProduct.jsp" class="btn btn-success btn-icon-split">
             <span class="text">Añadir nuevo producto</span>
         </a>
     </div>

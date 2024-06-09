@@ -13,34 +13,30 @@
 <jsp:include page="components/sidebar.jsp" />
 <jsp:include page="components/topbar.jsp" />
 <div class="container-fluid">
-
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Add Products</h1>
     </div>
     <div class="container mt-5">
-        <form action="addIngredient" method="post">
-            <div class="form-group">
+        <form action="registerProduct" method="post" enctype="multipart/form-data">
+        <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Introduce the ingredients name">
+                <input type="text" class="form-control" id="name" name="name" placeholder="Introduce the product name">
             </div>
             <div class="form-group">
                 <label for="image">Image</label>
-                <input type="text" class="form-control" id="image" name="image" placeholder="Introduce the ingredients name">
+                <input type="file" class="form-control" id="image" name="image" placeholder="Introduce the image product">
             </div>
             <div class="form-group">
-                <label for="selectOption">Type</label>
-                <select class="form-control" id="selectOption">
+                <label for="type">Type</label>
+                <select class="form-control" id="type" name="type">
                     <%for (Product_Type productType : productTypeList) { %>
                     <option value="<%=productType.toString()%>"><%=productType.getDisplayName()%></option>
                     <%}%>
                 </select>
             </div>
-
-            <input type="text" class="form-control" name="price" value = <%= price %>>
-
             <div class="form-group">
-                <label for="price">Número</label>
+                <label for="price">Price</label>
                 <input type="number" class="form-control" id="price" name="price" placeholder="Introduce the ingredients price">
             </div>
             <button type="submit" class="btn btn-primary">Add</button>

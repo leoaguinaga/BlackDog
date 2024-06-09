@@ -16,7 +16,17 @@ public enum Product_Type {
     public String getDisplayName() {
         return displayName;
     }
+
     public static List<Product_Type> getProductTypes() {
         return new ArrayList<>(Arrays.asList(Product_Type.values()));
+    }
+
+    public static Product_Type getProductType(String displayName) {
+        for (Product_Type type : Product_Type.values()) {
+            if (type.getDisplayName().equalsIgnoreCase(displayName)) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("No Product_Type found with displayName: " + displayName);
     }
 }

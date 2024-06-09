@@ -9,8 +9,8 @@
 <body>
 <h1>Iniciar Sesión</h1>
 <form action="login" method="post">
-    <label>DNI: <input type="text" name="email" required></label><br>
-    <label>Contraseña: <input type="password" name="password" required></label><br>
+    <label>Correo: <input type="text" name="email" id="email" required></label><br>
+    <label>Contraseña: <input type="password" name="password" id="password" required></label><br>
     <input type="submit" value="Ingresar">
     <a href="<%= request.getContextPath() %>/index.jsp" class="button">Regresar</a>
 </form>

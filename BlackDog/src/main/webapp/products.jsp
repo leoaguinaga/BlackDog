@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: yordi
-  Date: 07/06/2024
-  Time: 19:12
-  To change this template use File | Settings | File Templates.
---%>
 <%@page import="pe.edu.utp.blackdog.model.Product"%>
 <%@page import="java.util.List"%>
 
@@ -61,9 +54,9 @@
 <a href="showAllOrders">Registrar Bebida</a>
 <a href="showAllOrders">Registrar Salchipapa</a>
 <a href="showAllOrders">Registrar Chaufa</a>
-<%if(request.getAttribute("products")==null) {%>
-<h2>Aún no se registraron productos.</h2>
-<%} else {%>
+
+<% List<Product> products = (List<Product>) request.getAttribute("products");%>
+<%if (!products.isEmpty()) {%>
 <% for( Product product : (List<Product>) request.getAttribute("products")) {%>
 <table>
     <tr>
@@ -85,6 +78,8 @@
     </tr>
 </table>
 <%}%>
+<%} else {%>
+<h2>Aún no se registraron productos.</h2>
 <%}%>
 </body>
 </html>

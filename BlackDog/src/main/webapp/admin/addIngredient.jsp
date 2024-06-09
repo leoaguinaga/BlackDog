@@ -1,10 +1,4 @@
-<%@ page import="pe.edu.utp.blackdog.model.Ingredient" %><%--
-  Created by IntelliJ IDEA.
-  User: Leo
-  Date: 8/06/2024
-  Time: 19:29
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="pe.edu.utp.blackdog.model.Ingredient" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <jsp:include page="components/header.jsp" />
 <jsp:include page="components/sidebar.jsp" />
