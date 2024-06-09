@@ -27,12 +27,12 @@ public class AddProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String image = req.getParameter("image");
-        String type = req.getParameter("type");
+        Product_Type type = Product_Type.valueOf(req.getParameter("type"));
         double price = 0.0;
         try {
             ProductDAO productDAO = new ProductDAO();
             IngredientDAO ingredientDAO = new IngredientDAO();
-            Product product = Product.createProductWithoutId(name, image, 0.0, Product_Type.valueOf(type));
+            Product product = Product.createProductWithoutId(name, image, 0.0, type);
             productDAO.registerProduct(product);
             productDAO.close();
             List<Ingredient> ingredients = ingredientDAO.getAllIngredients();
