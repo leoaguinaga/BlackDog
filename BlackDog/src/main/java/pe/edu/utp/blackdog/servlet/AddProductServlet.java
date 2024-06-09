@@ -18,7 +18,7 @@ import java.util.List;
 
 @WebServlet("/admin/addProduct")
 public class AddProductServlet extends HttpServlet {
-    @Override
+    /*@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         this.doPost(req, resp);
     }
@@ -45,5 +45,5 @@ public class AddProductServlet extends HttpServlet {
         } catch (NamingException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 }

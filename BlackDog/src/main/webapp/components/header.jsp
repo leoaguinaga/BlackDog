@@ -1,10 +1,4 @@
-<%@ page import="pe.edu.utp.blackdog.model.Client" %><%--
-  Created by IntelliJ IDEA.
-  User: Leo
-  Date: 8/06/2024
-  Time: 14:48
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="pe.edu.utp.blackdog.model.Client" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <style>
@@ -93,6 +87,5 @@
         }
     %>
 
-
-
+    <link rel="icon" href="../img/logo%20final.png" type="image/png">
 </header>

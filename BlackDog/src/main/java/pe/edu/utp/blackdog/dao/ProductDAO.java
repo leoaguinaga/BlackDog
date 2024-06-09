@@ -1,25 +1,28 @@
 package pe.edu.utp.blackdog.dao;
 
-import pe.edu.utp.blackdog.model.Client;
 import pe.edu.utp.blackdog.model.Product;
 import pe.edu.utp.blackdog.model.Product_Type;
 import pe.edu.utp.blackdog.util.DataAccessMariaDB;
 
+import javax.imageio.ImageIO;
 import javax.naming.NamingException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDAO implements AutoCloseable{
+public class ProductDAO implements AutoCloseable {
     private final Connection cnn;
 
     public ProductDAO() throws SQLException, NamingException {
         this.cnn = DataAccessMariaDB.getConnection(DataAccessMariaDB.TipoDA.DATASOURCE, "java:/MariaDB");
     }
 
+    @Override
     public void close() throws SQLException {
         if (this.cnn != null) DataAccessMariaDB.closeConnection(this.cnn);
     }
@@ -28,7 +31,7 @@ public class ProductDAO implements AutoCloseable{
         String query = "INSERT INTO product (name, image, price, type) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, product.getName());
-            ps.setString(2, product.getImage());
+            ps.setBytes(2, product.getImage());
             ps.setDouble(3, product.getPrice());
             ps.setString(4, product.getProduct_type().toString());
             int rowsAffected = ps.executeUpdate();
@@ -47,11 +50,12 @@ public class ProductDAO implements AutoCloseable{
                 products.add(Product.createProduct(
                         rs.getLong("product_id"),
                         rs.getString("name"),
-                        rs.getString("image"),
+                        rs.getBytes("image"),
                         rs.getDouble("price"),
                         Product_Type.valueOf(rs.getString("type"))
                 ));
-            } if (products.size() == 0) {
+            }
+            if (products.isEmpty()) {
                 throw new SQLException("No se encontraron productos en la base de datos.");
             }
         }
@@ -68,14 +72,13 @@ public class ProductDAO implements AutoCloseable{
                     product = Product.createProduct(
                             rs.getLong("product_id"),
                             rs.getString("name"),
-                            rs.getString("image"),
+                            rs.getBytes("image"),
                             rs.getDouble("price"),
                             Product_Type.valueOf(rs.getString("type"))
                     );
                 } else {
                     throw new SQLException(String.format("No se encontró un producto con el ID %d en la base de datos.", product_id));
                 }
-
             }
         }
         return product;
@@ -85,9 +88,10 @@ public class ProductDAO implements AutoCloseable{
         String query = "UPDATE product SET name = ?, image = ?, price = ?, type = ? WHERE product_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, product.getName());
-            ps.setString(2, product.getImage());
+            ps.setBytes(2, product.getImage());
             ps.setDouble(3, product.getPrice());
             ps.setString(4, product.getProduct_type().toString());
+            ps.setLong(5, product_id);
             ps.executeUpdate();
         }
     }

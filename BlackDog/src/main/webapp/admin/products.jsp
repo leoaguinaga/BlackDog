@@ -1,5 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="pe.edu.utp.blackdog.model.Product" %>
+<%@ page import="pe.edu.utp.blackdog.dao.ProductDAO" %>
+<%@ page import="java.util.Base64" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<Product> products = (List<Product>) request.getAttribute("products"); %>
 
@@ -16,7 +18,7 @@
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <% if (products != null && !products.isEmpty()) { %>
+                    <% if (products != null && !products.isEmpty()) {%>
                     <thead>
                     <tr>
                         <th>Id</th>
@@ -28,13 +30,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Product product : products) { %>
+                    <% for (Product product : products) {
+                        String base64Image = Base64.getEncoder().encodeToString(product.getImage());%>
                     <tr>
                         <td><%= product.getProduct_id() %></td>
                         <td><%= product.getName()%></td>
                         <td><%= product.getPrice() %></td>
                         <td><%= product.getProduct_type().getDisplayName() %></td>
-                        <td><%= product.getImage() %></td>
+                        <td><img src="data:image/jpg;base64,<%= base64Image %>" alt="productImage" height="100px"/></td>
                         <td> <a href="${pageContext.request.contextPath}/admin/seeProductIngredient?id=<%= product.getProduct_id() %>"> Ver ingredientes del producto </a> </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/admin/deleteProduct?id=<%= product.getProduct_id() %>"><img src="img/borrar.png" alt="delete image" height="30px"></a>
