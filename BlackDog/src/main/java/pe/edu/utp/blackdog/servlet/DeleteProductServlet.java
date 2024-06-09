@@ -1,11 +1,16 @@
 package pe.edu.utp.blackdog.servlet;
 
+import pe.edu.utp.blackdog.dao.IngredientDAO;
+import pe.edu.utp.blackdog.dao.ProductDAO;
+
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/deleteProduct")
 public class DeleteProductServlet extends HttpServlet {
@@ -17,7 +22,17 @@ public class DeleteProductServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        long id = Long.parseLong(req.getParameter("id"));
+        try {
+            ProductDAO productDAO = new ProductDAO();
+            productDAO.deleteProduct(id);
+            productDAO.close();
+            resp.sendRedirect("products");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (NamingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -1,91 +1,58 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: yordi
-  Date: 07/06/2024
-  Time: 19:12
-  To change this template use File | Settings | File Templates.
---%>
-<%@page import="pe.edu.utp.blackdog.model.Product"%>
-<%@page import="java.util.List"%>
-
+<%@ page import="java.util.List" %>
+<%@ page import="pe.edu.utp.blackdog.model.Product" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Productos</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-        .actions {
-            text-align: center;
-        }
-        .actions button {
-            margin: 0 5px;
-            padding: 5px 10px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .actions button:hover {
-            background-color: #d32f2f;
-        }
-    </style>
-</head>
-<body>
-<h1>Black Dog - Night Food</h1>
-<nav>
-    <a href="showAllOrders">Pedidos</a>
-    <a href="showProducts">Productos</a>
-    <a href="logOut">Cerrar Sesión</a>
-</nav>
+<% List<Product> products = (List<Product>) request.getAttribute("products"); %>
 
-<h2>PRODUCTOS</h2>
-<a href="showAllOrders">Registrar Hamburguesa</a>
-<a href="showAllOrders">Registrar Bebida</a>
-<a href="showAllOrders">Registrar Salchipapa</a>
-<a href="showAllOrders">Registrar Chaufa</a>
-<%if(request.getAttribute("products")==null) {%>
-<h2>Aún no se registraron productos.</h2>
-<%} else {%>
-<% for( Product product : (List<Product>) request.getAttribute("products")) {%>
-<table>
-    <tr>
-        <th>CÓDIGO</th>
-        <th>NOMBRE</th>
-        <th>TIPO</th>
-        <th>PRECIO</th>
-        <th>ACCIONES</th>
-    </tr>
-    <tr>
-        <td><%=product.getProduct_id()%></td>
-        <td><%=product.getName()%></td>
-        <td><%=product.getProduct_type().toString()%></td>
-        <td>S/. <%=product.getPrice()%></td>
-        <td class="actions">
-            <button>Actualizar</button>
-            <button>Eliminar</button>
-        </td>
-    </tr>
-</table>
-<%}%>
-<%}%>
-</body>
-</html>
-
+<jsp:include page="components/header.jsp" />
+<jsp:include page="components/sidebar.jsp" />
+<jsp:include page="components/topbar.jsp" />
+<!-- Content Products -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Administrate Products</h1>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <% if (products != null && !products.isEmpty()) { %>
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Type</th>
+                        <th>Image</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% for (Product product : products) { %>
+                    <tr>
+                        <td><%= product.getProduct_id() %></td>
+                        <td><%= product.getName()%></td>
+                        <td><%= product.getPrice() %></td>
+                        <td><%= product.getProduct_type().getDisplayName() %></td>
+                        <td><%= product.getImage() %></td>
+                        <td> <a href="${pageContext.request.contextPath}/admin/seeProductIngredient?id=<%= product.getProduct_id() %>"> Ver ingredientes del producto </a> </td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/admin/deleteProduct?id=<%= product.getProduct_id() %>"><img src="img/borrar.png" alt="delete image" height="30px"></a>
+                            <a href="${pageContext.request.contextPath}/admin/updateProduct?id=<%= product.getProduct_id() %>"><img src="img/editar.png" alt="update image" height="30px"></a>
+                        </td>
+                    </tr>
+                    <% } %>
+                    <% } else  { %>
+                    <h2>No se encontraron productos en la base de datos</h2>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a href="addIngredient.jsp" class="btn btn-success btn-icon-split">
+            <span class="text">Añadir nuevo producto</span>
+        </a>
+    </div>
+</div>
+<jsp:include page="components/footer.jsp" />
+<jsp:include page="components/scripts.jsp" />

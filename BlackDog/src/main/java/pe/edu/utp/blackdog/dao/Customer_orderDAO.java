@@ -61,6 +61,32 @@ public class Customer_orderDAO implements AutoCloseable {
         return customer_oders;
     }
 
+    public List<Customer_order> getAllOnHoldOrders() throws SQLException, NamingException {
+        List<Customer_order> customer_oders = new ArrayList<>();
+        String query = "SELECT * FROM customer_order WHERE state = ?";
+        ClientDAO clientDAO = new ClientDAO();
+        try (PreparedStatement ps = cnn.prepareStatement(query)) {
+            ps.setString(1, "ON_HOLD");
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    customer_oders.add(Customer_order.createOrder(
+                            rs.getLong("customer_order_id"),
+                            clientDAO.getClientById(rs.getLong("client_id")),
+                            LocalDateTime.parse(String.valueOf(rs.getDate("order_date"))),
+                            rs.getString("address"),
+                            rs.getDouble("amount"),
+                            State.valueOf(rs.getString("state")),
+                            rs.getString("evidence_image")
+                    ));
+                    clientDAO.close();
+                } if (customer_oders.size() == 0) {
+                    throw new SQLException("No se encontraron ordenes pendientes en la base de datos.");
+                }
+            }
+        }
+        return customer_oders;
+    }
+
     public Customer_order getOrderById(long customer_oder_id) throws SQLException, NamingException {
         String query = "SELECT * FROM customer_oder WHERE customer_oder_id = ?";
         Customer_order customer_oder = null;
