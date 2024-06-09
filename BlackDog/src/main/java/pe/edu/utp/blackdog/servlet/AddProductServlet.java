@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/admin/addProduct")
 public class AddProductServlet extends HttpServlet {
@@ -30,11 +31,15 @@ public class AddProductServlet extends HttpServlet {
         double price = 0.0;
         try {
             ProductDAO productDAO = new ProductDAO();
+            IngredientDAO ingredientDAO = new IngredientDAO();
             Product product = Product.createProductWithoutId(name, image, 0.0, Product_Type.valueOf(type));
             productDAO.registerProduct(product);
             productDAO.close();
+            List<Ingredient> ingredients = ingredientDAO.getAllIngredients();
+            ingredientDAO.close();
             req.setAttribute("product", product);
-            req.getRequestDispatcher("setIngredients").forward(req, resp);
+            req.setAttribute("ingredients", ingredients);
+            req.getRequestDispatcher("setIngredients.jsp").forward(req, resp);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (NamingException e) {

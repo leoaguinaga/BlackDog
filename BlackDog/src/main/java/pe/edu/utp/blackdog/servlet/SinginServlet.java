@@ -29,17 +29,16 @@ public class SinginServlet extends HttpServlet {
         String email = req.getParameter("email");
         String pwd = req.getParameter("pwd");
 
-        Client client = Client.createClientWithoutId(firstName, lastName, phone, email, Auth.md5(pwd));
         try {
+            Client client = Client.createClientWithoutId(firstName, lastName, phone, email, Auth.md5(pwd));
             ClientDAO clientDAO = new ClientDAO();
-            System.out.println(client);
             clientDAO.registerClient(client);
             clientDAO.close();
 
             HttpSession session = req.getSession();
-            session.setAttribute("email", email);
+            session.setAttribute("client", client);
+            session.setAttribute("name", client.getFirst_name());
             session.setAttribute("userType", "client");
-            session.setAttribute("name", firstName);
             resp.sendRedirect("index.jsp");
 
         } catch (SQLException e) {

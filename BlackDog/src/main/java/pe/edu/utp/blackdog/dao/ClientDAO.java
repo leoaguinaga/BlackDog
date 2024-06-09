@@ -30,7 +30,7 @@ public class ClientDAO implements AutoCloseable {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    Client.createClient(
+                    client = Client.createClient(
                             rs.getLong("client_id"),
                             rs.getString("first_name"),
                             rs.getString("last_name"),

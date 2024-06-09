@@ -19,6 +19,9 @@
         </a>
     </div>
 
+    <jsp:include page="modal.jsp" />
+    <jsp:include page="singin.jsp" />
+
     <div class="home-img">
         <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
