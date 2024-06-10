@@ -30,12 +30,12 @@ public class AdminSeeProductIngredients extends HttpServlet {
             Product_ingredientDAO product_ingredientDAO = new Product_ingredientDAO();
 
             Product product = productDAO.getProductById(id);
-            HashMap<Ingredient, Integer> quantityIngredient = new HashMap<>();
+            HashMap<Long, Integer> quantityIngredient = new HashMap<>();
             List<Ingredient> ingredients = new ArrayList<>();
             List<Product_ingredient> product_ingredients = product_ingredientDAO.getProductIngredientsByProductId(id);
             for(Product_ingredient productIngredient : product_ingredients){
                 ingredients.add(ingredientDAO.getIngredientById(productIngredient.getIngredient_id()));
-                quantityIngredient.put(ingredientDAO.getIngredientById(productIngredient.getIngredient_id()), productIngredient.getQuantity());
+                quantityIngredient.put((productIngredient.getIngredient_id()), productIngredient.getQuantity());
             }
 
             System.out.println(product);

@@ -2,11 +2,10 @@
 <%@ page import="pe.edu.utp.blackdog.model.Product" %>
 <%@ page import="pe.edu.utp.blackdog.model.Ingredient" %>
 <%@ page import="java.util.HashMap" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<Ingredient> ingredients =  ( List<Ingredient>) request.getAttribute("ingredients"); %>
 <% Product product = (Product) request.getAttribute("product"); %>
-<% HashMap<Ingredient, Integer> quantityIngredient = (HashMap<Ingredient, Integer>) request.getAttribute("quantityIngredient"); %>
+<% HashMap<Long, Integer> quantityIngredient = (HashMap<Long, Integer>) request.getAttribute("quantityIngredient"); %>
 <jsp:include page="components/header.jsp" />
 <jsp:include page="components/sidebar.jsp" />
 <jsp:include page="components/topbar.jsp" />
@@ -40,10 +39,12 @@
 
                         <% for (Ingredient ingredient : ingredients) { %>
                         <tr>
-                            <td><%= ingredient.getName()%></td>
-                            <td>><%= quantityIngredient.get(ingredient)%></td>
+
+                            <td><%= ingredient.getName() %></td>
+                            <td><%= quantityIngredient.get(ingredient.getIngredient_id()) %> </td>
                         </tr>
                         <% } %>
+
                         <% } else  { %>
                         <h2>No se encontraron ingredientes en la base de datos</h2>
                         <% } %>
