@@ -38,6 +38,10 @@ public class AdminSeeProductIngredients extends HttpServlet {
                 quantityIngredient.put(ingredientDAO.getIngredientById(productIngredient.getIngredient_id()), productIngredient.getQuantity());
             }
 
+            System.out.println(product);
+            System.out.println(ingredients);
+            System.out.println(quantityIngredient);
+
             productDAO.close();
             ingredientDAO.close();
             product_ingredientDAO.close();
@@ -46,7 +50,7 @@ public class AdminSeeProductIngredients extends HttpServlet {
             req.setAttribute("ingredients", ingredients);
             req.setAttribute("quantityIngredient", quantityIngredient);
 
-
+            req.getRequestDispatcher("seeProductIngredients.jsp").forward(req, resp);
         } catch (Exception e) {
             req.setAttribute("message", e.getMessage());
             req.getRequestDispatcher("error.jsp").forward(req, resp);

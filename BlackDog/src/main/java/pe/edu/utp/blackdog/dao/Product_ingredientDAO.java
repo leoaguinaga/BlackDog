@@ -56,22 +56,19 @@ public class Product_ingredientDAO implements AutoCloseable{
 
     public List<Product_ingredient> getProductIngredientsByProductId(long product_id) throws SQLException, NamingException {
         String query = "SELECT * FROM product_ingredient WHERE product_id = ?";
-        Product_ingredient productIngredient = null;
         List<Product_ingredient> productIngredients = new ArrayList<>();
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setLong(1, product_id);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    productIngredient = Product_ingredient.createProduct_ingredient(
+                while (rs.next()) {
+                    productIngredients.add(Product_ingredient.createProduct_ingredient(
                             rs.getLong("product_id"),
                             rs.getLong("ingredient_id"),
                             rs.getInt("quantity")
-                    );
-                    productIngredients.add(productIngredient);
-                } else {
+                    ));
+                } if (productIngredients.size() == 0) {
                     throw new SQLException(String.format("No se encontró una relación de producto ingrediente con el ID %d en la base de datos.", product_id));
                 }
-
             }
         }
         return productIngredients;
