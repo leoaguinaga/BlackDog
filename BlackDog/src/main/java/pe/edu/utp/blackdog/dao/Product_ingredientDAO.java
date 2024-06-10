@@ -24,10 +24,10 @@ public class Product_ingredientDAO implements AutoCloseable{
     }
 
     public void registerProductIngredient(Product_ingredient productIngredient) throws SQLException, NamingException {
-        String query = "INSERT INTO order_detail (product_id, ingredient_id, quantity) VALUES (?, ?)";
+        String query = "INSERT INTO product_ingredient (product_id, ingredient_id, quantity) VALUES (?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
-            ps.setLong(1, productIngredient.getIngredient_id());
-            ps.setLong(2, productIngredient.getProduct_id());
+            ps.setLong(1, productIngredient.getProduct_id());
+            ps.setLong(2, productIngredient.getIngredient_id());
             ps.setLong(3, productIngredient.getQuantity());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0) {

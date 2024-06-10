@@ -4,13 +4,7 @@ import pe.edu.utp.blackdog.model.Product;
 import pe.edu.utp.blackdog.model.Product_Type;
 import pe.edu.utp.blackdog.util.DataAccessMariaDB;
 
-import javax.imageio.ImageIO;
 import javax.naming.NamingException;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,5 +96,25 @@ public class ProductDAO implements AutoCloseable {
             ps.setLong(1, product_id);
             ps.executeUpdate();
         }
+    }
+
+    public Product getLastProduct() throws SQLException {
+        String query = "SELECT * FROM product ORDER BY product_id DESC LIMIT 1";
+        Product product = null;
+        try (PreparedStatement ps = cnn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                product = Product.createProduct(
+                        rs.getLong("product_id"),
+                        rs.getString("name"),
+                        rs.getBytes("image"),
+                        rs.getDouble("price"),
+                        Product_Type.valueOf(rs.getString("type"))
+                );
+            } else {
+                throw new SQLException("No se encontró el último producto en la base de datos.");
+            }
+        }
+        return product;
     }
 }

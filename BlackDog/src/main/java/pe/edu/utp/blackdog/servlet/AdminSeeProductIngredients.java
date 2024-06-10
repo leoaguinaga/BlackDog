@@ -7,11 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/admin/setIngredients")
-public class SetIngredientsServlet extends HttpServlet {
+@WebServlet("admin/seeProductIngredients")
+public class AdminSeeProductIngredients extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doPost(req, resp);
+        int id = Integer.parseInt(req.getParameter("id"));
+
+
     }
 
     @Override

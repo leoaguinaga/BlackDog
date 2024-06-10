@@ -18,20 +18,20 @@
         <h1 class="h3 mb-0 text-gray-800">Add Products</h1>
     </div>
     <div class="container mt-5">
-        <form action="addProduct" method="post" enctype="multipart/form-data">
-        <div class="form-group">
+        <form action="registerProduct" method="post" enctype="multipart/form-data">
+            <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Introduce the product name">
             </div>
             <div class="form-group">
                 <label for="image">Image</label>
-                <input type="text" class="form-control" id="image" name="image" placeholder="Introduce the image product">
+                <input type="file" class="form-control" id="image" name="image" placeholder="Introduce the image product">
             </div>
             <div class="form-group">
                 <label for="type">Type</label>
                 <select class="form-control" id="type" name="type">
                     <%for (Product_Type productType : productTypeList) { %>
-                    <option value="<%=productType%>"><%=productType.getDisplayName()%></option>
+                    <option value="<%=productType.toString()%>"><%=productType.getDisplayName()%></option>
                     <%}%>
                 </select>
             </div>

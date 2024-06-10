@@ -1,0 +1,75 @@
+package pe.edu.utp.blackdog.servlet;
+
+import pe.edu.utp.blackdog.dao.ProductDAO;
+import pe.edu.utp.blackdog.dao.Product_ingredientDAO;
+import pe.edu.utp.blackdog.model.Product;
+import pe.edu.utp.blackdog.model.Product_ingredient;
+import pe.edu.utp.blackdog.model.Product_Type;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+
+@WebServlet("/admin/setIngredients")
+@MultipartConfig
+public class AdminSetIngredientsServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        this.doPost(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String name = req.getParameter("name");
+        String type = req.getParameter("type");
+        String imageBase64 = req.getParameter("imageBase64");
+        double price = Double.parseDouble(req.getParameter("price"));
+        String[] ingredientIds = req.getParameterValues("ingredientId");
+
+        byte[] imageBytes = Base64.getDecoder().decode(imageBase64);
+        BufferedImage bufferedImage = Product.byteArrayToImage(imageBytes);
+
+        try {
+            Product product = Product.createProductWithoutId(name, bufferedImage, price, Product_Type.valueOf(type));
+
+            ProductDAO productDAO = new ProductDAO();
+            productDAO.registerProduct(product);
+
+            Product lastProduct = productDAO.getLastProduct();
+            productDAO.close();
+
+            List<Product_ingredient> productIngredients = new ArrayList<>();
+
+            for (String ingredientIdStr : ingredientIds) {
+                long ingredientId = Long.parseLong(ingredientIdStr);
+                int quantity = Integer.parseInt(req.getParameter("quantity_" + ingredientId));
+
+                if(quantity!=0) {
+                    Product_ingredient productIngredient = Product_ingredient.createProduct_ingredient(lastProduct.getProduct_id(), ingredientId, quantity);
+                    productIngredients.add(productIngredient);
+                }
+            }
+
+            Product_ingredientDAO productIngredientDAO = new Product_ingredientDAO();
+            for (Product_ingredient productIngredient : productIngredients) {
+                productIngredientDAO.registerProductIngredient(productIngredient);
+            }
+
+            productIngredientDAO.close();
+
+            resp.sendRedirect("products.jsp");
+        } catch (Exception e) {
+            req.setAttribute("message", e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
+        }
+    }
+}
+

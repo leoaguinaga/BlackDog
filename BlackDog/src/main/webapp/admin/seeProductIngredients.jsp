@@ -19,21 +19,11 @@
     <div class="container mt-5">
         <form action="setIngredients" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="name">Name: <%=product.getName()%></label>
-                <input type="hidden" id="name" name="name" value="<%=product.getName()%>">
+                <label>Name: <%=product.getName()%></label>
             </div>
 
             <div class="form-group">
-                <label for="price">Price: <%=product.getPrice()%></label>
-                <input type="hidden" id="price" name="price" value="<%=product.getPrice()%>">
-            </div>
-
-            <div>
-                <input type="hidden" id="imageBase64" name="imageBase64" value="<%=request.getAttribute("imageBase64")%>">
-            </div>
-
-            <div>
-                <input type="hidden" id="type" name="type" value="<%=product.getProduct_type().toString()%>">
+                <label>Price: <%=product.getPrice()%></label>
             </div>
 
             <div class="card shadow mb-4">
@@ -44,7 +34,6 @@
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Price</th>
                                 <th>Quantity</th>
                             </tr>
                             </thead>
@@ -52,10 +41,8 @@
                             <% for (Ingredient ingredient : ingredients) { %>
                             <tr>
                                 <td><%= ingredient.getName()%></td>
-                                <td><%= ingredient.getPrice() %></td>
                                 <td>
-                                    <input type="hidden" name="ingredientId" value="<%= ingredient.getIngredient_id() %>">
-                                    <input type="number" class="form-control" name="quantity_<%= ingredient.getIngredient_id() %>" placeholder="Quantity">
+                                    <input type="number" class="form-control" name="quantity_<%= ingredient.getIngredient_id() %>" readonly>
                                 </td>
                             </tr>
                             <% } %>
