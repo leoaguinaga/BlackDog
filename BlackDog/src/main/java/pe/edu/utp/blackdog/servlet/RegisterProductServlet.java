@@ -31,7 +31,6 @@ public class RegisterProductServlet extends HttpServlet {
         double price = Double.parseDouble(req.getParameter("price"));
 
         BufferedImage bufferedImage = ImageIO.read(imagePart.getInputStream());
-
         try {
             Product product = Product.createProductWithoutId(name, bufferedImage, price, Product_Type.valueOf(type));
 

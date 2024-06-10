@@ -54,7 +54,7 @@
                                 <td><%= ingredient.getPrice() %></td>
                                 <td>
                                     <input type="hidden" name="ingredientId" value="<%= ingredient.getIngredient_id() %>">
-                                    <input type="number" class="form-control" name="quantity_<%= ingredient.getIngredient_id() %>" placeholder="Quantity">
+                                    <input type="number" class="form-control" value="0" name="quantity_<%= ingredient.getIngredient_id() %>" placeholder="Quantity">
                                 </td>
                             </tr>
                             <% } %>
