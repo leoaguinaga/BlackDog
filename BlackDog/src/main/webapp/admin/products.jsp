@@ -1,5 +1,3 @@
-PRODUCTS.JSP
-
 <%@ page import="java.util.List" %>
 <%@ page import="pe.edu.utp.blackdog.model.Product" %>
 <%@ page import="pe.edu.utp.blackdog.dao.ProductDAO" %>

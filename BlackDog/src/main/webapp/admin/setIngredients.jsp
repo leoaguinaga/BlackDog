@@ -4,7 +4,6 @@
 <%@ page import="pe.edu.utp.blackdog.model.Product" %>
 <%@ page import="pe.edu.utp.blackdog.model.Ingredient" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% List<Product_ingredient> productIngredientList = new LinkedList<>(); %>
 <% List<Ingredient> ingredients = (List<Ingredient>) request.getAttribute("ingredients"); %>
 <% Product product = (Product) request.getAttribute("product"); %>
 <jsp:include page="components/header.jsp" />
