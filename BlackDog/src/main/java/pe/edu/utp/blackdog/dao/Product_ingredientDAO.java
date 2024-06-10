@@ -94,4 +94,14 @@ public class Product_ingredientDAO implements AutoCloseable{
         }
         return productIngredient;
     }
+
+    public void DeleteProductIngredient(long product_id) throws SQLException, NamingException {
+        String query = "DELETE FROM product_ingredient WHERE product_id = ?";
+        try (PreparedStatement ps = cnn.prepareStatement(query)) {
+            ps.setLong(1, product_id);
+            ps.executeUpdate();
+        }
+    }
+
+
 }

@@ -2,6 +2,7 @@ package pe.edu.utp.blackdog.servlet;
 
 
 import pe.edu.utp.blackdog.dao.ProductDAO;
+import pe.edu.utp.blackdog.dao.Product_ingredientDAO;
 
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -24,9 +25,15 @@ public class AdminDeleteProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         long id = Long.parseLong(req.getParameter("id"));
         try {
+
+            Product_ingredientDAO product_ingredientDAO = new Product_ingredientDAO();
+            product_ingredientDAO.DeleteProductIngredient(id);
+            product_ingredientDAO.close();
+
             ProductDAO productDAO = new ProductDAO();
             productDAO.deleteProduct(id);
             productDAO.close();
+
             resp.sendRedirect("products");
         } catch (SQLException e) {
             throw new RuntimeException(e);

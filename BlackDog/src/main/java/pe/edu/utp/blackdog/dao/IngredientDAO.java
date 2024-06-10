@@ -91,4 +91,18 @@ public class IngredientDAO implements AutoCloseable{
             ps.executeUpdate();
         }
     }
+
+    public String getIngredientNameById(long ingredient_id) throws SQLException {
+        String query = "SELECT name FROM ingredient WHERE ingredient_id = ?";
+        try (PreparedStatement ps = cnn.prepareStatement(query)) {
+            ps.setLong(1, ingredient_id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("name");
+                } else {
+                    throw new SQLException(String.format("No se encontró un ingrediente con el ID %d en la base de datos.", ingredient_id));
+                }
+            }
+        }
+    }
 }
