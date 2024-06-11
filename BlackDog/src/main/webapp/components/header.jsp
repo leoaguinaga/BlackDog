@@ -69,9 +69,9 @@
     <a href="#" class="logo"> <i class="bx bx-home"></i> Black Dog</a>
 
     <ul class="navlist">
-        <li> <a href="#home" class="active"> Home </a></li>
+        <li> <a href="index.jsp" class="active"> Home </a></li>
         <li> <a href="#about"> About us </a></li>
-        <li> <a href="#"> Tienda </a></li>
+        <li> <a href="${pageContext.request.contextPath}/menu?type=HAMBURGER"> Carta </a></li>
         <li> <a href="#"> Contáctanos </a></li>
     </ul>
 

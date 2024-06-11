@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Base64" %>
+<%@ page import="pe.edu.utp.blackdog.model.Product_Type" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -15,7 +16,12 @@
 <section class="products" id="products">
     <div class="middle-text">
         <h4>Nuestros Productos</h4>
-        <h2>Hamburguesas, Salchipapas y Chaufas</h2>
+        <h2>
+            <a href="${pageContext.request.contextPath}/menu?type=HAMBURGER">Hamburguesas</a> &nbsp; &nbsp;
+            <a href="${pageContext.request.contextPath}/menu?type=CHAUFA">Chaufas</a> &nbsp; &nbsp;
+            <a href="${pageContext.request.contextPath}/menu?type=SALCHIPAPA">Salchipapas</a> &nbsp; &nbsp;
+            <a href="${pageContext.request.contextPath}/menu?type=DRINK">Bebidas</a> &nbsp; &nbsp;
+        </h2>
     </div>
 
     <jsp:include page="modal.jsp" />
@@ -51,6 +57,7 @@
     </style>
 
     <section class="list-products" id="list-products">
+        <% if (products != null && !products.isEmpty()) {%>
         <% for (Product product : products) {
             String base64Image = Base64.getEncoder().encodeToString(product.getImage());
             String ingredients = productIngredientsMap.get(product.getProduct_id());
@@ -58,6 +65,7 @@
         <div class="card" style="width: 18rem;">
             <img src="data:image/jpg;base64,<%= base64Image %>" class="card-img-top" alt="burger">
             <div class="card-body">
+                <form action="AddToCar" method="post">
                 <h5 class="card-title"><%= product.getName()%></h5>
                 <h5 class="card-subtitle"><b>Precio: </b><%= product.getPrice() %></h5>
                 <p class="card-text"><%= ingredients %></p>
@@ -65,14 +73,17 @@
                 <!-- Aquí se agrega el casillero de cantidad -->
                 <div class="quantity-control">
                     <button type="button" class="quantity-btn" onclick="decrement(<%= product.getProduct_id() %>)">-</button>
-                    <input type="text" id="quantity-<%= product.getProduct_id() %>" value="1" readonly>
+                    <input type="text" id="quantity<%= product.getProduct_id() %>" value="1" readonly>
+                    <input type="text" id="id" value="<%= product.getProduct_id() %>" hidden>
                     <button type="button" class="quantity-btn" onclick="increment(<%= product.getProduct_id() %>)">+</button>
                 </div>
-
-                <a href="#" class="btn btn-primary">Agregar al carrito</a>
+                <button class="btn btn-primary">Agregar al carrito</button>
+                </form>
             </div>
         </div>
-        <%}%>
+        <%} } else { %>
+        <h2>No se encontraron productos en la base de datos</h2>
+            <% } %>
     </section>
 </section>
 

@@ -4,6 +4,7 @@ import pe.edu.utp.blackdog.dao.ProductDAO;
 import pe.edu.utp.blackdog.dao.Product_ingredientDAO;
 import pe.edu.utp.blackdog.dao.IngredientDAO;
 import pe.edu.utp.blackdog.model.Product;
+import pe.edu.utp.blackdog.model.Product_Type;
 import pe.edu.utp.blackdog.model.Product_ingredient;
 
 import javax.naming.NamingException;
@@ -23,12 +24,13 @@ public class MenuServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Product_Type productType = Product_Type.valueOf(req.getParameter("type"));
         try {
             ProductDAO productDAO = new ProductDAO();
             Product_ingredientDAO productIngredientDAO = new Product_ingredientDAO();
             IngredientDAO ingredientDAO = new IngredientDAO();
 
-            List<Product> products = productDAO.getAllProducts();
+            List<Product> products = productDAO.getProductsByType(productType);
             Map<Long, String> productIngredientsMap = new HashMap<>();
 
             for (Product product : products) {

@@ -56,6 +56,29 @@ public class ProductDAO implements AutoCloseable {
         return products;
     }
 
+    public List<Product> getProductsByType(Product_Type productType) throws SQLException {
+        List<Product> products = new ArrayList<>();
+        String query = "SELECT * FROM product WHERE type = ?";
+        try (PreparedStatement ps = cnn.prepareStatement(query)) {
+            ps.setString(1, productType.toString());
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    products.add(Product.createProduct(
+                            rs.getLong("product_id"),
+                            rs.getString("name"),
+                            rs.getBytes("image"),
+                            rs.getDouble("price"),
+                            Product_Type.valueOf(rs.getString("type"))
+                    ));
+                }
+                if (products.isEmpty()) {
+                    throw new SQLException(String.format("No se encontró un producto del tipo %s en la base de datos.", productType));
+                }
+            }
+        }
+        return products;
+    }
+
     public Product getProductById(long product_id) throws SQLException {
         String query = "SELECT * FROM product WHERE product_id = ?";
         Product product = null;
