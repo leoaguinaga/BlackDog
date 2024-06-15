@@ -1,6 +1,5 @@
 package pe.edu.utp.blackdog.dao;
 
-import pe.edu.utp.blackdog.model.Order_detail;
 import pe.edu.utp.blackdog.model.Product_ingredient;
 import pe.edu.utp.blackdog.util.DataAccessMariaDB;
 

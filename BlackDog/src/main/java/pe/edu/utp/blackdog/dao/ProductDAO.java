@@ -71,9 +71,6 @@ public class ProductDAO implements AutoCloseable {
                             Product_Type.valueOf(rs.getString("type"))
                     ));
                 }
-                if (products.isEmpty()) {
-                    throw new SQLException(String.format("No se encontró un producto del tipo %s en la base de datos.", productType));
-                }
             }
         }
         return products;

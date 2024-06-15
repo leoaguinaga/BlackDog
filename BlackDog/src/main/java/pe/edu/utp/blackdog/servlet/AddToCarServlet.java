@@ -1,6 +1,5 @@
 package pe.edu.utp.blackdog.servlet;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,36 +7,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 
-@WebServlet("/AddToCar")
+@WebServlet("/addToCart")
 public class AddToCarServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        this.doPost(req, resp);
-    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Obtener los parámetros del formulario
+        Long productId = Long.parseLong(request.getParameter("productId"));
+        int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int quantity = Integer.parseInt(req.getParameter("id"));
-        long id = Long.parseLong(req.getParameter("quantity"));
-
-        HttpSession session = req.getSession();
-        try {
-            ProductDAO productDAO = new ProductDAO();
-            Product product = productDAO.getProductoById(id);
-
-            HashMap<Product, Integer> saleCar = (HashMap<Product, Integer>) session.getAttribute("saleCar");
-
-            product.setStock(product.getStock() - quantity);
-            productDAO.updateProduct(product, id);
-            saleCar.put(product, quantity);
-            resp.sendRedirect("Products");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
+        // Obtener la sesión actual
+        HttpSession session = request.getSession();
+        Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new HashMap<>();
         }
+
+        // Actualizar la cantidad del producto en el carrito
+        cart.put(productId, cart.getOrDefault(productId, 0) + quantity);
+
+        // Guardar el carrito en la sesión
+        session.setAttribute("cart", cart);
+
+        // Redireccionar a la página del menu
+        response.sendRedirect(request.getContextPath() + "/menu?type=HAMBURGER");
     }
 }
+

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.HashMap;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
@@ -38,9 +39,11 @@ public class LoginServlet extends HttpServlet {
                 session.setAttribute("name", name);
                 resp.sendRedirect("admin/dashboard.jsp");
             } else if ("client".equals(userType)) {
+                HashMap<Product, Integer> saleCar = new HashMap<>();
                 ClientDAO clientDAO = new ClientDAO();
                 Client client = clientDAO.getClientByEmail(email);
                 clientDAO.close();
+                session.setAttribute("saleCar", saleCar);
                 session.setAttribute("client", client);
                 session.setAttribute("name", client.getFirst_name());
                 resp.sendRedirect("index.jsp");

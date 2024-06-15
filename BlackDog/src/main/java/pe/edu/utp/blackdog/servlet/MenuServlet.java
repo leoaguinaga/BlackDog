@@ -31,26 +31,39 @@ public class MenuServlet extends HttpServlet {
             IngredientDAO ingredientDAO = new IngredientDAO();
 
             List<Product> products = productDAO.getProductsByType(productType);
-            Map<Long, String> productIngredientsMap = new HashMap<>();
 
-            for (Product product : products) {
-                List<Product_ingredient> ingredients = productIngredientDAO.getProductIngredientsByProductId(product.getProduct_id());
-                StringBuilder ingredientList = new StringBuilder();
-                for (int i = 0; i < ingredients.size(); i++) {
-                    String ingredientName = ingredientDAO.getIngredientNameById(ingredients.get(i).getIngredient_id());
-                    ingredientList.append(ingredientName);
-                    if (i < ingredients.size() - 1) {
-                        ingredientList.append(", ");
-                    } else {
-                        ingredientList.append(".");
+
+            if(!products.isEmpty()){
+                if(productType.toString().equals("HAMBURGER")) {
+                    Map<Long, String> productIngredientsMap = new HashMap<>();
+
+                    for (Product product : products) {
+                        List<Product_ingredient> ingredients = productIngredientDAO.getProductIngredientsByProductId(product.getProduct_id());
+                        StringBuilder ingredientList = new StringBuilder();
+
+                        for (int i = 0; i < ingredients.size(); i++) {
+                            String ingredientName = ingredientDAO.getIngredientNameById(ingredients.get(i).getIngredient_id());
+                            ingredientList.append(ingredientName);
+
+                            if (i < ingredients.size() - 1) {
+                                ingredientList.append(", ");
+                            }else {
+                                ingredientList.append(".");
+                            }
+                        }
+                        productIngredientsMap.put(product.getProduct_id(), ingredientList.toString());
                     }
-                }
-                productIngredientsMap.put(product.getProduct_id(), ingredientList.toString());
-            }
 
-            req.setAttribute("products", products);
-            req.setAttribute("productIngredientsMap", productIngredientsMap);
-            req.getRequestDispatcher("menu.jsp").forward(req, resp);
+                    req.setAttribute("products", products);
+                    req.setAttribute("productIngredientsMap", productIngredientsMap);
+                    req.getRequestDispatcher("menu.jsp").forward(req, resp);
+                }else{
+                    req.setAttribute("products", products);
+                    req.getRequestDispatcher("otherMenu.jsp").forward(req, resp);
+                }
+            }else{
+                req.getRequestDispatcher("otherMenu.jsp").forward(req, resp);
+            }
 
         } catch (SQLException | NamingException e) {
             throw new RuntimeException(e);

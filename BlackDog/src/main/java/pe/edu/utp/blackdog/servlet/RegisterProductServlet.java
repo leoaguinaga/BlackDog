@@ -33,7 +33,6 @@ public class RegisterProductServlet extends HttpServlet {
         BufferedImage bufferedImage = ImageIO.read(imagePart.getInputStream());
         try {
             Product product = Product.createProductWithoutId(name, bufferedImage, price, Product_Type.valueOf(type));
-
             ProductDAO productDAO = new ProductDAO();
 
             IngredientDAO ingredientDAO = new IngredientDAO();
@@ -48,11 +47,13 @@ public class RegisterProductServlet extends HttpServlet {
                 req.setAttribute("ingredients", ingredients);
                 req.getRequestDispatcher("setIngredients.jsp").forward(req, resp);
             }else {
+
                 productDAO.registerProduct(product);
                 productDAO.close();
-                resp.sendRedirect("products.jsp");
+                String message = "Producto registrado exitosamente";
+                req.setAttribute("message", message);
+                req.getRequestDispatcher("message.jsp").forward(req, resp);
             }
-
         } catch (Exception e) {
             req.setAttribute("message", e.getMessage());
             req.getRequestDispatcher("error.jsp").forward(req, resp);
