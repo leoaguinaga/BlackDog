@@ -65,7 +65,8 @@
         <div class="card" style="width: 18rem;">
             <img src="data:image/jpg;base64,<%= base64Image %>" class="card-img-top" alt="burger">
             <div class="card-body">
-                <form action="${pageContext.request.contextPath}/addToCart" method="post">
+                <form action="${pageContext.request.contextPath}/cart" method="post">
+                    <input type="hidden" name="action" value="add">
                     <h5 class="card-title"><%= product.getName() %></h5>
                     <h5 class="card-subtitle"><b>Precio: </b><%= product.getPrice() %></h5>
                     <p class="card-text"><%= ingredients %></p>

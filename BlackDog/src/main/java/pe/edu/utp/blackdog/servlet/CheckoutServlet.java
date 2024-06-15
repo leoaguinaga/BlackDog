@@ -18,7 +18,18 @@ import java.util.Map;
 
 @WebServlet("/checkout")
 public class CheckoutServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        process(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        process(req, resp);
+    }
+
+    private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("cart");
 
@@ -36,7 +47,7 @@ public class CheckoutServlet extends HttpServlet {
                     productList.add(product);
                     quantities.add(quantity);
                 }
-
+                productDAO.close();
                 req.setAttribute("products", productList);
                 req.setAttribute("quantities", quantities);
 

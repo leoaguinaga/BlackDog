@@ -33,6 +33,7 @@ public class RegisterOrderServlet extends HttpServlet {
             Customer_orderDAO customer_orderDAO = new Customer_orderDAO();
             ClientDAO clientDAO = new ClientDAO();
             Client client = clientDAO.getClientByEmail(email_client);
+            clientDAO.close();
 
             // Crear la orden
             Customer_order customerOrder =
@@ -42,6 +43,7 @@ public class RegisterOrderServlet extends HttpServlet {
 
             // Registrar la orden en la base de datos
             customer_orderDAO.registerOrder(customerOrder);
+            customer_orderDAO.close();
 
             // Redirigir a la página de confirmación
             req.setAttribute("customerOrder", customerOrder);

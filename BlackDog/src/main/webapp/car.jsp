@@ -27,6 +27,7 @@
             <th>Cantidad</th>
             <th>Precio unitario</th>
             <th>Monto</th>
+            <th>Acciones</th>
         </tr>
         </thead>
 
@@ -46,6 +47,13 @@
             <td><%= quantity %></td>
             <td><%= product.getPrice() %></td>
             <td><%= productTotal %></td>
+            <td>
+                <form action="${pageContext.request.contextPath}/cart" method="post">
+                    <input type="hidden" name="action" value="remove">
+                    <input type="hidden" name="productId" value="<%= product.getProduct_id() %>">
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </td>
         </tr>
         <%
             }
@@ -59,10 +67,12 @@
         <tfoot>
         <tr>
             <td colspan="4">Total</td>
-            <td><%= totalPrice %></td>
+            <td colspan="2"><%= totalPrice %></td>
         </tr>
         </tfoot>
     </table>
+
+    <img src="img/qr_yape.jpg" alt="qr_yape" height="360" width="330">
 
     <!-- Formulario para registrar la orden -->
     <form action="${pageContext.request.contextPath}/registerOrder" method="post" enctype="multipart/form-data">

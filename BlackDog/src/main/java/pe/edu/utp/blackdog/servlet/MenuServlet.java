@@ -32,7 +32,6 @@ public class MenuServlet extends HttpServlet {
 
             List<Product> products = productDAO.getProductsByType(productType);
 
-
             if(!products.isEmpty()){
                 if(productType.toString().equals("HAMBURGER")) {
                     Map<Long, String> productIngredientsMap = new HashMap<>();
@@ -64,6 +63,9 @@ public class MenuServlet extends HttpServlet {
             }else{
                 req.getRequestDispatcher("otherMenu.jsp").forward(req, resp);
             }
+            productDAO.close();
+            productIngredientDAO.close();
+            ingredientDAO.close();
 
         } catch (SQLException | NamingException e) {
             throw new RuntimeException(e);
