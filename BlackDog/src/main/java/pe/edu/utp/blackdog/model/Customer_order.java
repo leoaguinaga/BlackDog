@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Customer_order {
     private long customer_order_id;
@@ -62,9 +63,6 @@ public class Customer_order {
     public Client getClient() {
         return client;
     }
-    public LocalDateTime getOrder_date() {
-        return order_date;
-    }
     public String getAddress() {
         return address;
     }
@@ -75,6 +73,22 @@ public class Customer_order {
         return state;
     }
     public byte[] getEvidence_image() { return evidence_image;}
+    public LocalDateTime getOrder_date() { return order_date;}
+
+    public String getOrderDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        return order_date.format(formatter);
+    }
+
+    public String getOrderDateOnly() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return order_date.format(formatter);
+    }
+
+    public String getOrderTimeOnly() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        return order_date.format(formatter);
+    }
 
     public static byte[] imageToByteArray(BufferedImage image) throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {

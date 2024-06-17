@@ -14,7 +14,7 @@
         <p>Su orden ha sido registrada exitosamente.</p>
         <p><strong>ID de la Orden:</strong> <%= customerOrder.getCustomer_order_id() %></p>
         <p><strong>Cliente:</strong> <%= customerOrder.getClient().getFirst_name() %> <%= customerOrder.getClient().getLast_name() %></p>
-        <p><strong>Fecha:</strong> <%= customerOrder.getOrder_date() %></p>
+        <p><strong>Fecha y hora:</strong> <%= customerOrder.getOrderDateTime() %></p>
         <p><strong>Dirección:</strong> <%= customerOrder.getAddress() %></p>
         <p><strong>Total:</strong> <%= customerOrder.getAmount() %></p>
     </div>

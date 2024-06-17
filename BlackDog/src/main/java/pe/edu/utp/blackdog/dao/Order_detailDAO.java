@@ -24,10 +24,11 @@ public class Order_detailDAO implements AutoCloseable{
     }
 
     public void registerOrder_detail(Order_detail orderDetail) throws SQLException, NamingException {
-        String query = "INSERT INTO order_detail (customer_order, product_id) VALUES (?, ?)";
+        String query = "INSERT INTO order_detail (customer_order, product_id, quantity) VALUES (?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setLong(1, orderDetail.getCustomerOder().getCustomer_order_id());
             ps.setLong(2, orderDetail.getProduct().getProduct_id());
+            ps.setInt(3, orderDetail.getQuantity());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0) {
                 throw new SQLException("No se pudo insertar el detalle de la orden en la base de datos.");
@@ -45,62 +46,63 @@ public class Order_detailDAO implements AutoCloseable{
             while (rs.next()) {
                 orderDetails.add(Order_detail.createOrderDetail(
                         customerOrderDAO.getOrderById(rs.getLong("customer_order")),
-                        productDAO.getProductById(rs.getLong("product_id"))
+                        productDAO.getProductById(rs.getLong("product_id")),
+                        rs.getInt("quantity")
                 ));
                 customerOrderDAO.close();
                 productDAO.close();
-            } if (orderDetails.size() == 0) {
-                throw new SQLException("No se encontraron ingredientes en la base de datos.");
+            } if (orderDetails.isEmpty()) {
+                throw new SQLException("No se encontraron los detalles del pedido en la base de datos.");
             }
         }
         return orderDetails;
     }
 
-    public Order_detail getOrderDetailsByOrderId(long customer_order_id) throws SQLException, NamingException {
-        String query = "SELECT * FROM order_detail WHERE customer_order_id = ?";
-        Order_detail order_detail = null;
+    public List<Order_detail> getOrderDetailsByOrderId(long customer_order_id) throws SQLException, NamingException {
+        String query = "SELECT * FROM order_detail WHERE customer_order = ?";
+        List<Order_detail> order_details = new ArrayList<>();
         Customer_orderDAO customerOrderDAO = new Customer_orderDAO();
         ProductDAO productDAO = new ProductDAO();
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setLong(1, customer_order_id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    order_detail = Order_detail.createOrderDetail(
-                            customerOrderDAO.getOrderById(rs.getLong("customer_order")),
-                            productDAO.getProductById(rs.getLong("product_id"))
-                    );
-                    customerOrderDAO.close();
-                    productDAO.close();
-                } else {
-                    throw new SQLException(String.format("No se encontró un ingrediente con el ID %d en la base de datos.", customer_order_id));
-                }
-
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                order_details.add(Order_detail.createOrderDetail(
+                        customerOrderDAO.getOrderById(rs.getLong("customer_order")),
+                        productDAO.getProductById(rs.getLong("product_id")),
+                        rs.getInt("quantity")
+                ));
+            } if (order_details.isEmpty()) {
+                throw new SQLException("No se encontraron los detalles del pedido en la base de datos.");
             }
         }
-        return order_detail;
+        customerOrderDAO.close();
+        productDAO.close();
+        return order_details;
     }
 
-    public Order_detail getOrderDetailsByProductId(long product_id) throws SQLException, NamingException {
+    public List<Order_detail> getOrderDetailsByProductId(long product_id) throws SQLException, NamingException {
         String query = "SELECT * FROM product WHERE product_id = ?";
-        Order_detail order_detail = null;
+        List<Order_detail> order_details = new ArrayList<>();
         Customer_orderDAO customerOrderDAO = new Customer_orderDAO();
         ProductDAO productDAO = new ProductDAO();
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setLong(1, product_id);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    order_detail = Order_detail.createOrderDetail(
+                while (rs.next()) {
+                    order_details.add(Order_detail.createOrderDetail(
                             customerOrderDAO.getOrderById(rs.getLong("customer_order")),
-                            productDAO.getProductById(rs.getLong("product_id"))
-                    );
+                            productDAO.getProductById(rs.getLong("product_id")),
+                            rs.getInt("quantity")
+                    ));
                     customerOrderDAO.close();
                     productDAO.close();
-                } else {
-                    throw new SQLException(String.format("No se encontró un ingrediente con el ID %d en la base de datos.", product_id));
+                } if (order_details.isEmpty()) {
+                    throw new SQLException("No se encontraron los detalles del pedido en la base de datos.");
                 }
-
             }
         }
-        return order_detail;
+        return order_details;
     }
+
 }

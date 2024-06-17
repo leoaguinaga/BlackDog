@@ -6,7 +6,6 @@ import pe.edu.utp.blackdog.util.DataAccessMariaDB;
 
 import javax.naming.NamingException;
 import java.sql.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,4 +136,28 @@ public class Customer_orderDAO implements AutoCloseable {
             ps.executeUpdate();
         }
     }
+
+    public Customer_order getLastCustomer_order() throws SQLException, NamingException {
+        String query = "SELECT * FROM customer_order ORDER BY customer_order_id DESC LIMIT 1";
+        Customer_order customer_order = null;
+        ClientDAO clientDAO = new ClientDAO();
+        try (PreparedStatement ps = cnn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                customer_order = Customer_order.createOrder(
+                        rs.getLong("customer_order_id"),
+                        clientDAO.getClientById(rs.getLong("client_id")),
+                        rs.getTimestamp("order_date").toLocalDateTime(), // Conversión de Timestamp a LocalDateTime
+                        rs.getString("address"),
+                        rs.getDouble("amount"),
+                        State.valueOf(rs.getString("state")),
+                        rs.getBytes("evidence_image")
+                );
+            } else {
+                throw new SQLException("No se encontró el último producto en la base de datos.");
+            }
+        }
+        return customer_order;
+    }
+
 }

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum State {
-    ON_HOLD("En espera"), ON_PROCESS("En proceso"), FINISHED("Finalizado"), CANCELED("Cancelado");
+    ON_HOLD("EN ESPERA"), ON_PROCESS("EN PROCESO"), FINISHED("FINALIZADO"), CANCELED("CANCELADO");
 
     private final String displayName;
 

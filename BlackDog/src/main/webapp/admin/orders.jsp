@@ -10,7 +10,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Administrate Products</h1>
+        <h1 class="h3 mb-0 text-gray-800">Orders</h1>
     </div>
 
     <div class="card shadow mb-4">
@@ -22,27 +22,19 @@
                     <tr>
                         <th>Id</th>
                         <th>Client</th>
-                        <th>Date</th>
-                        <th>Address</th>
+                        <th>Date and time</th>
                         <th>Amount</th>
                         <th>State</th>
-                        <th>Image</th>
-                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <% for (Customer_order customerOrder : customerOrders) { %>
                     <tr>
-                        <td><%= customerOrder.getCustomer_order_id() %></td>
+                        <td><a href="${pageContext.request.contextPath}/admin/orderDetail?id=<%= customerOrder.getCustomer_order_id()%>"><%= customerOrder.getCustomer_order_id()%></a></td>
                         <td><%= customerOrder.getClient().getFirst_name() + " " + customerOrder.getClient().getLast_name() %></td>
-                        <td><%= customerOrder.getOrder_date() %></td>
-                        <td><%= customerOrder.getAddress() %></td>
+                        <td><%= customerOrder.getOrderDateTime() %></td>
+                        <td><%= customerOrder.getAmount() %></td>
                         <td><%= customerOrder.getState() %></td>
-                        <td><img src="img/products/<%= customerOrder.getEvidence_image() %>" alt="" height="70px"></td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/admin/cancelOrder?id=<%= customerOrder.getCustomer_order_id() %>"><img src="img/borrar.png" alt="delete image" height="30px"></a>
-                            <a href="${pageContext.request.contextPath}/admin/acceptOrder?id=<%= customerOrder.getCustomer_order_id() %>"><img src="img/editar.png" alt="update image" height="30px"></a>
-                        </td>
                     </tr>
                     <% } %>
                     <% } else  { %>
