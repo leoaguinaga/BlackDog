@@ -9,6 +9,7 @@
 <jsp:include page="components/header.jsp" />
 
 <section class="order-confirmation" id="order-confirmation">
+    <br><br>
     <div class="container">
         <h2>¡Orden Registrada!</h2>
         <p>Su orden ha sido registrada exitosamente.</p>

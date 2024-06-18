@@ -56,7 +56,7 @@
                     </tr>
                     </tfoot>
                 </table>
-
+                <% if (customer_order.getState()!=State.FINISHED){%>
                 <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=ON_PROCESS&id=<%= customer_order.getCustomer_order_id() %>">Aceptar</a>
                 <br>
                 <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=CANCELED&id=<%= customer_order.getCustomer_order_id() %>">Cancelar</a>
@@ -64,9 +64,10 @@
                 <% if (customer_order.getState()==State.ON_PROCESS){%>
                 <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=FINISHED&id=<%= customer_order.getCustomer_order_id() %>">Finalizar</a>
                 <%}%>
+                <%}%>
                 <br>
                 <strong>Evidencia de pago: </strong>
-                <img src="data:image/jpg;base64,<%= base64Evidence %>" alt="productImage" height="100px"/>
+                <img src="data:image/jpg;base64,<%= base64Evidence %>" alt="productImage" height="300px"/>
             </div>
         </div>
     </div>

@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
                 String name = administradorDAO.getAdministratorNameByEmail(email);
                 administradorDAO.close();
                 session.setAttribute("name", name);
-                resp.sendRedirect("admin/dashboard.jsp");
+                resp.sendRedirect("admin/ordersHistory");
             } else if ("client".equals(userType)) {
                 HashMap<Product, Integer> saleCar = new HashMap<>();
                 ClientDAO clientDAO = new ClientDAO();

@@ -20,8 +20,12 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 @WebServlet("admin/registerProduct")
-@MultipartConfig
-public class RegisterProductServlet extends HttpServlet {
+@MultipartConfig/*(
+        fileSizeThreshold = 1024 * 1024 * 2,  // 2 MB
+        maxFileSize = 1024 * 1024 * 50,       // 50 MB
+        maxRequestSize = 1024 * 1024 * 100    // 100 MB
+)*/
+public class AdminRegisterProductServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

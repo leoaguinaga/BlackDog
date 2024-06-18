@@ -1,11 +1,5 @@
 <%@ page import="pe.edu.utp.blackdog.model.Product_Type" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: Leo
-  Date: 8/06/2024
-  Time: 20:09
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%List<Product_Type> productTypeList = Product_Type.getProductTypes();%>
 <%double price = 0.0;%>

@@ -54,6 +54,7 @@ public class MenuServlet extends HttpServlet {
 
             req.setAttribute("products", products);
             req.setAttribute("productIngredientsMap", productIngredientsMap);
+            req.setAttribute("productType", productType);
             req.getRequestDispatcher("menu.jsp").forward(req, resp);
 
             productDAO.close();

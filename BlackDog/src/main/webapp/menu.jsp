@@ -2,11 +2,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Base64" %>
+<%@ page import="pe.edu.utp.blackdog.model.Product_Type" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
     List<Product> products = (List<Product>) request.getAttribute("products");
     Map<Long, String> productIngredientsMap = (Map<Long, String>) request.getAttribute("productIngredientsMap");
+    Product_Type product_type = (Product_Type) request.getAttribute("productType");
 %>
 
 <jsp:include page="components/head.jsp" />
@@ -60,9 +62,14 @@
         <% for (Product product : products) {
             String base64Image = Base64.getEncoder().encodeToString(product.getImage());
             String ingredients = productIngredientsMap != null ? productIngredientsMap.get(product.getProduct_id()) : null;
+            String width;
+            if(product_type == Product_Type.DRINK) {
+                width = "50px";
+            }else width = "auto";
         %>
         <div class="card" style="width: 18rem;">
-            <img src="data:image/jpg;base64,<%= base64Image %>" class="card-img-top" alt="burger">
+
+            <img src="data:image/jpg;base64,<%= base64Image %>" class="card-img-top" alt="burger" width="<%=width%>" height="240px">
             <div class="card-body">
                 <form action="${pageContext.request.contextPath}/cart" method="post">
                     <input type="hidden" name="action" value="add">

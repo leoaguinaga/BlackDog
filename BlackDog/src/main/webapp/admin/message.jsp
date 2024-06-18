@@ -15,7 +15,7 @@
         <div class="card-body">
             <h1><%= message %></h1>
         </div>
-        <button href="products">Volver</button>
+        <button href="${pageContext.request.contextPath}/admin/products">Volver</button>
     </div>
     <jsp:include page="components/footer.jsp" />
 <jsp:include page="components/scripts.jsp" />
