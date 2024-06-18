@@ -23,12 +23,16 @@ public class AddIngredientServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         double price = Double.parseDouble(req.getParameter("price"));
+
         try {
             IngredientDAO ingredientDAO = new IngredientDAO();
             Ingredient ingredient = Ingredient.createIngredientWithoutId(name, price);
+
             ingredientDAO.registerIngredient(ingredient);
             ingredientDAO.close();
+
             resp.sendRedirect("ingredients");
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         } catch (NamingException e) {

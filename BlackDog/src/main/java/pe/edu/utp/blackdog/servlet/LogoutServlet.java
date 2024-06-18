@@ -23,14 +23,20 @@ public class LogoutServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         String usertype = (String) session.getAttribute("userType");
-        if (session != null) {
-            session.invalidate();
-        }
 
-        if ("admin".equals(usertype)) {
-            response.sendRedirect("./index.jsp");
-        } else if ("client".equals(usertype)) {
-            response.sendRedirect("index.jsp");
+        try {
+            session.invalidate();
+
+            if ("admin".equals(usertype)) {
+                response.sendRedirect("./index.jsp");
+            } else if ("client".equals(usertype)) {
+                response.sendRedirect("index.jsp");
+            }
+
+        }catch(Exception e) {
+            String msg = "No existe una sesión activa";
+            request.setAttribute("message", msg + e.getMessage());
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         }
     }
 }

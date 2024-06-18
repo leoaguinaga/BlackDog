@@ -25,7 +25,7 @@
                         <th>Price</th>
                         <th>Type</th>
                         <th>Image</th>
-                        <th>Action</th>
+                        <th colspan="2">Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,7 +37,7 @@
                         <td><%= product.getPrice() %></td>
                         <td><%= product.getProduct_type().getDisplayName() %></td>
                         <td><img src="data:image/jpg;base64,<%= base64Image %>" alt="productImage" height="100px"/></td>
-                        <td> <a href="${pageContext.request.contextPath}/admin/seeProductIngredients?id=<%= product.getProduct_id() %>"> Ver ingredientes del producto </a> </td>
+                        <td> <a href="${pageContext.request.contextPath}/admin/seeProductIngredients?id=<%= product.getProduct_id() %>"> Ingredientes</a> </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/admin/deleteProduct?id=<%= product.getProduct_id() %>"><img src="img/borrar.png" alt="delete image" height="30px"></a>
                             <a href="${pageContext.request.contextPath}/admin/updateProduct?id=<%= product.getProduct_id() %>"><img src="img/editar.png" alt="update image" height="30px"></a>

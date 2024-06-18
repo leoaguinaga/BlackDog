@@ -34,7 +34,7 @@
                         <td><%= customerOrder.getClient().getFirst_name() + " " + customerOrder.getClient().getLast_name() %></td>
                         <td><%= customerOrder.getOrderDateTime() %></td>
                         <td><%= customerOrder.getAmount() %></td>
-                        <td><%= customerOrder.getState() %></td>
+                        <td><%= customerOrder.getState().getDisplayName() %></td>
                     </tr>
                     <% } %>
                     <% } else  { %>

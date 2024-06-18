@@ -1,10 +1,3 @@
-<%@ page import="pe.edu.utp.blackdog.model.Client" %><%--
-  Created by IntelliJ IDEA.
-  User: Leo
-  Date: 8/06/2024
-  Time: 14:48
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <style>
@@ -79,7 +72,7 @@
         String name = (String) session.getAttribute("name");
         if (name == null) { %>
     <div class="nav-icons">
-        <a href="#" data-toggle="modal" data-target="#myModal" class="nav-link">Loggin</a>
+        <a href="#" data-toggle="modal" data-target="#myModal" class="nav-link">Log in</a>
     </div>
     <%
     } else { %>

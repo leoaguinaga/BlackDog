@@ -1,4 +1,3 @@
-<%@ page import="pe.edu.utp.blackdog.model.Customer_order" %>
 <%@ page import="java.util.List" %>
 <%@ page import="pe.edu.utp.blackdog.model.Ingredient" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,7 +10,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Administrate Products</h1>
+        <h1 class="h3 mb-0 text-gray-800">Administrate Ingredients</h1>
     </div>
     <div class="card shadow mb-4">
         <div class="card-body">

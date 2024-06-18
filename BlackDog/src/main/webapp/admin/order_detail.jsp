@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="pe.edu.utp.blackdog.model.Order_detail" %>
 <%@ page import="java.util.Base64" %>
+<%@ page import="pe.edu.utp.blackdog.model.State" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<Order_detail> order_detailList = (List<Order_detail>) request.getAttribute("order_detailList"); %>
 <% Customer_order customer_order = (Customer_order) request.getAttribute("customer_order"); %>
@@ -56,11 +57,16 @@
                     </tfoot>
                 </table>
 
+                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=ON_PROCESS&id=<%= customer_order.getCustomer_order_id() %>">Aceptar</a>
+                <br>
+                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=CANCELED&id=<%= customer_order.getCustomer_order_id() %>">Cancelar</a>
+                <br>
+                <% if (customer_order.getState()==State.ON_PROCESS){%>
+                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=FINISHED&id=<%= customer_order.getCustomer_order_id() %>">Finalizar</a>
+                <%}%>
+                <br>
                 <strong>Evidencia de pago: </strong>
                 <img src="data:image/jpg;base64,<%= base64Evidence %>" alt="productImage" height="100px"/>
-
-                <a href="${pageContext.request.contextPath}/admin/cancelOrder?id=<%= customer_order.getCustomer_order_id() %>"><img src="img/borrar.png" alt="delete image" height="30px"></a>
-                <a href="${pageContext.request.contextPath}/admin/acceptOrder?id=<%= customer_order.getCustomer_order_id() %>"><img src="img/editar.png" alt="update image" height="30px"></a>
             </div>
         </div>
     </div>

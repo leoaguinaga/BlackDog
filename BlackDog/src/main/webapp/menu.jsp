@@ -2,7 +2,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Base64" %>
-<%@ page import="pe.edu.utp.blackdog.model.Product_Type" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -60,7 +59,7 @@
         <% if (products != null && !products.isEmpty()) {%>
         <% for (Product product : products) {
             String base64Image = Base64.getEncoder().encodeToString(product.getImage());
-            String ingredients = productIngredientsMap.get(product.getProduct_id());
+            String ingredients = productIngredientsMap != null ? productIngredientsMap.get(product.getProduct_id()) : null;
         %>
         <div class="card" style="width: 18rem;">
             <img src="data:image/jpg;base64,<%= base64Image %>" class="card-img-top" alt="burger">
@@ -69,7 +68,9 @@
                     <input type="hidden" name="action" value="add">
                     <h5 class="card-title"><%= product.getName() %></h5>
                     <h5 class="card-subtitle"><b>Precio: </b><%= product.getPrice() %></h5>
+                    <% if (ingredients != null) { %>
                     <p class="card-text"><%= ingredients %></p>
+                    <% } %>
 
                     <div class="quantity-control">
                         <button type="button" class="quantity-btn" onclick="decrement(<%= product.getProduct_id() %>)">-</button>

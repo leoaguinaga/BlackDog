@@ -36,49 +36,61 @@ public class RegisterOrderServlet extends HttpServlet {
         Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("cart");
 
         BufferedImage evidence = ImageIO.read(filePart.getInputStream());
-        try {
-            Customer_orderDAO customer_orderDAO = new Customer_orderDAO();
-            Order_detailDAO order_detailDAO = new Order_detailDAO();
-            ProductDAO productDAO = new ProductDAO();
-            ClientDAO clientDAO = new ClientDAO();
-            Client client = clientDAO.getClientByEmail(email_client);
 
-            // Crear la orden
-            Customer_order customerOrder =
-                    Customer_order
-                            .createOrderWithoutId
-                                    (client, LocalDateTime.now(), address, totalPrice, evidence);
+        if (email_client==null){
+            String msg = "Inicia sesión para poder registrar tu pedido";
+            req.setAttribute("message", msg);
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
+        } else {
+            try {
+                Customer_orderDAO customer_orderDAO = new Customer_orderDAO();
+                Order_detailDAO order_detailDAO = new Order_detailDAO();
+                ProductDAO productDAO = new ProductDAO();
+                ClientDAO clientDAO = new ClientDAO();
 
-            // Registrar la orden en la base de datos
-            customer_orderDAO.registerOrder(customerOrder);
-            Customer_order co = customer_orderDAO.getLastCustomer_order();
 
-            if (cart != null && !cart.isEmpty()) {
-                for (Map.Entry<Long, Integer> entry : cart.entrySet()) {
-                    Long productId = entry.getKey();
-                    int quantity = entry.getValue();
+                Client client = clientDAO.getClientByEmail(email_client);
 
-                    Product product = productDAO.getProductById(productId);
+                // Crear la orden
+                Customer_order customerOrder =
+                        Customer_order
+                                .createOrderWithoutId
+                                        (client, LocalDateTime.now(), address, totalPrice, evidence);
 
-                    Order_detail orderDetail = Order_detail.createOrderDetail(
-                            co, product, quantity);
+                // Registrar la orden en la base de datos
+                customer_orderDAO.registerOrder(customerOrder);
+                Customer_order co = customer_orderDAO.getLastCustomer_order();
 
-                    // Registrar el detalle de la orden en la base de datos
-                    order_detailDAO.registerOrder_detail(orderDetail);
+                if (cart != null && !cart.isEmpty()) {
+                    for (Map.Entry<Long, Integer> entry : cart.entrySet()) {
+                        Long productId = entry.getKey();
+                        int quantity = entry.getValue();
+
+                        Product product = productDAO.getProductById(productId);
+
+                        Order_detail orderDetail = Order_detail.createOrderDetail(
+                                co, product, quantity);
+
+                        // Registrar el detalle de la orden en la base de datos
+                        order_detailDAO.registerOrder_detail(orderDetail);
+                    }
                 }
+
+                clientDAO.close();
+                productDAO.close();
+                customer_orderDAO.close();
+                order_detailDAO.close();
+
+                // Redirigir a la página de confirmación
+                req.setAttribute("customerOrder", co);
+                req.getRequestDispatcher("orderConfirmation.jsp").forward(req, resp);
+
+
+            } catch (SQLException | NamingException e) {
+                String msg = String.format("Ups, ha ocurrido un error al registrar el orden: %s", e.getMessage());
+                req.setAttribute("message", msg + e.getMessage());
+                req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
-
-            clientDAO.close();
-            productDAO.close();
-            customer_orderDAO.close();
-            order_detailDAO.close();
-
-            // Redirigir a la página de confirmación
-            req.setAttribute("customerOrder", co);
-            req.getRequestDispatcher("orderConfirmation.jsp").forward(req, resp);
-
-        } catch (SQLException | NamingException e) {
-            throw new RuntimeException(e);
         }
     }
 }
