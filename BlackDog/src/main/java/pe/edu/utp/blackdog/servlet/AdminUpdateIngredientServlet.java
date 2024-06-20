@@ -30,10 +30,10 @@ public class AdminUpdateIngredientServlet extends HttpServlet {
             ingredientDAO.updateIngredient(ingredient, id);
             ingredientDAO.close();
             resp.sendRedirect("ingredients");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            String msg = "Error al actualizar el ingrediente";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }

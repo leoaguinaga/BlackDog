@@ -67,7 +67,8 @@ public class AdminSetIngredientsServlet extends HttpServlet {
 
             resp.sendRedirect("products.jsp");
         } catch (Exception e) {
-            req.setAttribute("message", e.getMessage());
+            String msg = "No se agregaron los ingredientes al producto";
+            req.setAttribute("message", msg + ". " + e.getMessage());
             req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }

@@ -33,9 +33,9 @@ public class AdminAlterStateOrderServlet extends HttpServlet {
 
             resp.sendRedirect(req.getContextPath()+"/admin/orderDetail?id=" + cou.getCustomer_order_id());
 
-        } catch (SQLException | NamingException e) {
-            String msg = "Error al actualizar el pedido";
-            req.setAttribute("message", msg+ e.getMessage());
+        } catch (Exception e) {
+            String msg = "Error al actualizar el estado del pedido";
+            req.setAttribute("message", msg + ". " + e.getMessage());
             req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }

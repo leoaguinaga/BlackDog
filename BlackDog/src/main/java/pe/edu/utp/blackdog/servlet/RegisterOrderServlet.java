@@ -86,9 +86,9 @@ public class RegisterOrderServlet extends HttpServlet {
                 req.getRequestDispatcher("orderConfirmation.jsp").forward(req, resp);
 
 
-            } catch (SQLException | NamingException e) {
-                String msg = String.format("Ups, ha ocurrido un error al registrar el orden: %s", e.getMessage());
-                req.setAttribute("message", msg + e.getMessage());
+            } catch (Exception e) {
+                String msg = "Error al registrar la orden";
+                req.setAttribute("message", msg + ". " + e.getMessage());
                 req.getRequestDispatcher("error.jsp").forward(req, resp);
             }
         }

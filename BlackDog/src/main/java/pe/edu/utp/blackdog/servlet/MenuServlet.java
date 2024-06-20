@@ -68,8 +68,10 @@ public class MenuServlet extends HttpServlet {
             productIngredientDAO.close();
             ingredientDAO.close();
 
-        } catch (SQLException | NamingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            String msg = "No se puede ver el menú en este momento. Inténtalo más tarde";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }

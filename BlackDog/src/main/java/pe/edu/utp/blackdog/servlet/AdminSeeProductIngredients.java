@@ -52,7 +52,8 @@ public class AdminSeeProductIngredients extends HttpServlet {
 
             req.getRequestDispatcher("seeProductIngredients.jsp").forward(req, resp);
         } catch (Exception e) {
-            req.setAttribute("message", e.getMessage());
+            String msg = "No existen ingredientes para este producto";
+            req.setAttribute("message", msg + ". " + e.getMessage());
             req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
 
@@ -60,6 +61,6 @@ public class AdminSeeProductIngredients extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        this.doGet(req, resp);
     }
 }

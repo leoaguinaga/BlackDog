@@ -33,10 +33,10 @@ public class AddIngredientServlet extends HttpServlet {
 
             resp.sendRedirect("ingredients");
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            String msg = "No se pudo agregar el ingrediente";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }

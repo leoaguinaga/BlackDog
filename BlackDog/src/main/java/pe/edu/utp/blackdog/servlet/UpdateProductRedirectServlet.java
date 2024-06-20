@@ -30,10 +30,10 @@ public class UpdateProductRedirectServlet extends HttpServlet {
             productDAO.close();
             req.setAttribute("product", product);
             req.getRequestDispatcher("updateProduct.jsp").forward(req, resp);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            String msg = "Error al actualizar el producto";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }

@@ -59,7 +59,8 @@ public class AdminRegisterProductServlet extends HttpServlet {
                 req.getRequestDispatcher("message.jsp").forward(req, resp);
             }
         } catch (Exception e) {
-            req.setAttribute("message", e.getMessage());
+            String msg = "Error al registrar el producto";
+            req.setAttribute("message", msg + ". " + e.getMessage());
             req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }

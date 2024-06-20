@@ -26,10 +26,10 @@ public class DeleteIngredientServlet extends HttpServlet {
             ingredientDAO.deleteIngredient(id);
             ingredientDAO.close();
             resp.sendRedirect("ingredients");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            String msg = "Error al eliminar el ingrediente";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }

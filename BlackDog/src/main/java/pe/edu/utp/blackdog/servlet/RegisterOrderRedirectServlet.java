@@ -26,7 +26,9 @@ public class RegisterOrderRedirectServlet extends HttpServlet {
             req.setAttribute("amount", amount);
             req.getRequestDispatcher("registerOrder.jsp").forward(req, resp);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            String msg = "Error al registrar la orden";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }

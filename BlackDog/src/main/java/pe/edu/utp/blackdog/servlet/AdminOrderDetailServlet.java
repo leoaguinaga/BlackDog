@@ -40,8 +40,10 @@ public class AdminOrderDetailServlet extends HttpServlet {
             req.setAttribute("customer_order", customerOrder);
             req.getRequestDispatcher("order_detail.jsp").forward(req, resp);
 
-        } catch (SQLException | NamingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            String msg = "No se han encontrado los detalles del pedido";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 

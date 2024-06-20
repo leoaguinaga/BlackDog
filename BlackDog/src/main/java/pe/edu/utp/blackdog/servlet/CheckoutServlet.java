@@ -52,8 +52,10 @@ public class CheckoutServlet extends HttpServlet {
 
                 // Enviar los datos a car.jsp
                 req.getRequestDispatcher("/car.jsp").forward(req, resp);
-        } catch (SQLException | NamingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            String msg = "El carrito está vacío";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }

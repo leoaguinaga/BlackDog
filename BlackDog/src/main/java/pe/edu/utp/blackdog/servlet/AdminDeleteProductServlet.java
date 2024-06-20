@@ -35,10 +35,10 @@ public class AdminDeleteProductServlet extends HttpServlet {
             productDAO.close();
 
             resp.sendRedirect("products");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            String msg = "Error al eliminar el producto";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 

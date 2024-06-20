@@ -28,10 +28,10 @@ public class UpdateIngredientRedirectServlet extends HttpServlet {
             ingredientDAO.close();
             req.setAttribute("ingredient", ingredient);
             req.getRequestDispatcher("updateIngredient.jsp").forward(req, resp);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (NamingException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            String msg = "No se puede registrar el ingrediente";
+            req.setAttribute("message", msg + ". " + e.getMessage());
+            req.getRequestDispatcher("error.jsp").forward(req, resp);
         }
     }
 }
