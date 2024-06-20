@@ -29,7 +29,7 @@ public class MenuServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String strProductType = req.getParameter("productType");
+        String strProductType = req.getParameter("type");
         Product_Type productType = (strProductType == null || strProductType.isEmpty() || strProductType.isBlank()) ? Product_Type.HAMBURGER : Product_Type.valueOf(strProductType);
          
         try {
