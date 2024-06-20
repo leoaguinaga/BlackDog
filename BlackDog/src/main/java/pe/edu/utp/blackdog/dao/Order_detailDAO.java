@@ -1,5 +1,6 @@
 package pe.edu.utp.blackdog.dao;
 
+import pe.edu.utp.blackdog.interfaces.Order_detailCrud;
 import pe.edu.utp.blackdog.model.Ingredient;
 import pe.edu.utp.blackdog.model.Order_detail;
 import pe.edu.utp.blackdog.util.DataAccessMariaDB;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order_detailDAO implements AutoCloseable{
+public class Order_detailDAO implements AutoCloseable, Order_detailCrud {
     private final Connection cnn;
 
     public Order_detailDAO() throws SQLException, NamingException {

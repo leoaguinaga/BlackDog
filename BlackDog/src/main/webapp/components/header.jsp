@@ -59,13 +59,13 @@
 </style>
 
 <header>
-    <a href="#" class="logo"> <i class="bx bx-home"></i> Black Dog</a>
+    <a href="index.jsp" class="logo"> <i class="bx bx-home"></i> Black Dog</a>
 
     <ul class="navlist">
         <li> <a href="index.jsp" class="active"> Home </a></li>
         <li> <a href="#about"> About us </a></li>
-        <li> <a href="${pageContext.request.contextPath}/menu?type=HAMBURGER"> Carta </a></li>
-        <li> <a href="#"> Contáctanos </a></li>
+        <li> <a href="menu"> Carta </a></li>
+        <li> <a href="#"> Contactanos </a></li>
     </ul>
 
     <%
@@ -76,7 +76,7 @@
     </div>
     <%
     } else { %>
-    <li><a class="nav-link scrollto" href="dashboard.jsp">Hola, <%= name %></a></li>
+    <li><a class="nav-link scrollto" href="checkout">Hola, <%= name %></a></li>
     <li class="nav-item" style="padding-left: 5px">
         <form action="logout" method="post" class="d-inline">
             <button type="submit" class="btn btn-primary">Logout</button>
@@ -85,7 +85,4 @@
     <%
         }
     %>
-
-
-
 </header>

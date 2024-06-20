@@ -31,10 +31,9 @@ public class CheckoutServlet extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("cart");
+        Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("car");
 
         try {
-            if (cart != null && !cart.isEmpty()) {
                 ProductDAO productDAO = new ProductDAO();
                 List<Product> productList = new ArrayList<>();
                 List<Integer> quantities = new ArrayList<>();
@@ -53,11 +52,6 @@ public class CheckoutServlet extends HttpServlet {
 
                 // Enviar los datos a car.jsp
                 req.getRequestDispatcher("/car.jsp").forward(req, resp);
-
-            } else {
-                // Si el carrito está vacío, redirigir a la página de productos
-                resp.sendRedirect(req.getContextPath() + "/menu?type=HAMBURGER");
-            }
         } catch (SQLException | NamingException e) {
             throw new RuntimeException(e);
         }

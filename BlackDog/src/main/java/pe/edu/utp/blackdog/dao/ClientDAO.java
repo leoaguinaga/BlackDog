@@ -1,5 +1,6 @@
 package pe.edu.utp.blackdog.dao;
 
+import pe.edu.utp.blackdog.interfaces.ClientCrud;
 import pe.edu.utp.blackdog.model.Client;
 import pe.edu.utp.blackdog.util.DataAccessMariaDB;
 
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDAO implements AutoCloseable {
+public class ClientDAO implements AutoCloseable, ClientCrud {
     private final Connection cnn;
 
     public ClientDAO() throws SQLException, NamingException {

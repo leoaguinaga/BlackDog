@@ -9,7 +9,7 @@
             Disfruta una buena <br>
             burger
         </h1>
-        <a href="${pageContext.request.contextPath}/menu?type=HAMBURGER" class="btn-custom">
+        <a href="menu" class="btn-custom">
             Carta
             <i class="bx bxs-right-arrow"></i>
         </a>

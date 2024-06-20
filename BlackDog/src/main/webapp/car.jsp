@@ -8,16 +8,26 @@
     // Obtener la lista de productos y las cantidades
     List<Product> products = (List<Product>) request.getAttribute("products");
     List<Integer> quantities = (List<Integer>) request.getAttribute("quantities");
-
+    HttpSession session1 = request.getSession(false);
     double totalPrice = 0.0;
 %>
 
 <jsp:include page="components/head.jsp" />
 <jsp:include page="components/header.jsp" />
-
+<br><br>
 <section class="products" id="products">
     <jsp:include page="modal.jsp" />
     <jsp:include page="singin.jsp" />
+
+    <%
+        if (products != null && quantities != null && !products.isEmpty()) {
+            for (int i = 0; i < products.size(); i++) {
+                Product product = products.get(i);
+                int quantity = quantities.get(i);
+                double productTotal = product.getPrice() * quantity;
+                totalPrice += productTotal;
+                String base64Image = Base64.getEncoder().encodeToString(product.getImage());
+    %>
 
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 
@@ -32,15 +42,7 @@
         </thead>
 
         <tbody>
-        <%
-            if (products != null && quantities != null && !products.isEmpty()) {
-                for (int i = 0; i < products.size(); i++) {
-                    Product product = products.get(i);
-                    int quantity = quantities.get(i);
-                    double productTotal = product.getPrice() * quantity;
-                    totalPrice += productTotal;
-                    String base64Image = Base64.getEncoder().encodeToString(product.getImage());
-        %>
+
         <tr>
             <td><img src="data:image/jpg;base64,<%= base64Image %>" alt="productImage" height="100px"/></td>
             <td><%= product.getName() %></td>
@@ -48,21 +50,14 @@
             <td><%= product.getPrice() %></td>
             <td><%= productTotal %></td>
             <td>
-                <form action="${pageContext.request.contextPath}/cart" method="post">
+                <form action="${pageContext.request.contextPath}/car" method="post">
                     <input type="hidden" name="action" value="remove">
                     <input type="hidden" name="productId" value="<%= product.getProduct_id() %>">
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
             </td>
         </tr>
-        <%
-            }
-        } else {
-        %>
-        <h2>No se encontraron productos agregados al carrito.</h2>
-        <%
-            }
-        %>
+
         </tbody>
         <tfoot>
         <tr>
@@ -71,18 +66,15 @@
         </tr>
         </tfoot>
     </table>
-
-    <img src="img/qr_yape.jpg" alt="qr_yape" height="360" width="330">
-
-    <!-- Formulario para registrar la orden -->
-    <form action="${pageContext.request.contextPath}/registerOrder" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="totalPrice" value="<%= totalPrice %>">
-        <label for="address"> Dirección</label>
-        <input type="text" id="address" name="address" placeholder="Dirección para delivery">
-        <label for="evidence"> Evidencia (Yape o Plin)</label>
-        <input type="file" id="evidence" name="evidence" required>
-        <button class="btn btn-success" type="submit">Registrar Orden</button>
-    </form>
+    <%
+        }
+    } else {
+    %>
+    <h2>No se encontraron productos agregados al carrito.</h2>
+    <%
+        }
+    %>
+    <a href="${pageContext.request.contextPath}/RegisterOrderRedirect?amount=<%= totalPrice %>" class="btn btn-primary">Registrar compra!</a>
 
     <jsp:include page="components/footer.jsp" />
 </section>

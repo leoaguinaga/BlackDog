@@ -24,7 +24,14 @@ public class MenuServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Product_Type productType = Product_Type.valueOf(req.getParameter("type"));
+        this.doPost(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String strProductType = req.getParameter("productType");
+        Product_Type productType = (strProductType == null) ? Product_Type.HAMBURGER : Product_Type.valueOf(strProductType);
+         
         try {
             ProductDAO productDAO = new ProductDAO();
             Product_ingredientDAO productIngredientDAO = new Product_ingredientDAO();
@@ -64,11 +71,6 @@ public class MenuServlet extends HttpServlet {
         } catch (SQLException | NamingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
     }
 }
 

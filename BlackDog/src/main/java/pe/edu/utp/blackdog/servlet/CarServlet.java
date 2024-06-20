@@ -10,16 +10,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-@WebServlet("/cart")
+@WebServlet("/car")
 public class CarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Obtener la acción (añadir o eliminar)
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
-        Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("cart");
+        Map<Long, Integer> car = (Map<Long, Integer>) session.getAttribute("car");
 
-        if (cart == null) {
-            cart = new HashMap<>();
+        if (car == null) {
+            car = new HashMap<>();
         }
 
         if ("add".equals(action)) {
@@ -28,20 +28,20 @@ public class CarServlet extends HttpServlet {
             int quantity = Integer.parseInt(request.getParameter("quantity"));
 
             // Actualizar la cantidad del producto en el carrito
-            cart.put(productId, cart.getOrDefault(productId, 0) + quantity);
+            car.put(productId, car.getOrDefault(productId, 0) + quantity);
 
             // Redireccionar a la página del menu
-            response.sendRedirect(request.getContextPath() + "/menu?type=HAMBURGER");
+            response.sendRedirect("menu");
         } else if ("remove".equals(action)) {
             // Obtener el ID del producto a eliminar
             Long productId = Long.parseLong(request.getParameter("productId"));
 
             // Eliminar el producto del carrito
-            cart.remove(productId);
+            car.remove(productId);
             response.sendRedirect(request.getContextPath() + "/checkout");
         }
 
         // Guardar el carrito en la sesión
-        session.setAttribute("cart", cart);
+        session.setAttribute("car", car);
     }
 }

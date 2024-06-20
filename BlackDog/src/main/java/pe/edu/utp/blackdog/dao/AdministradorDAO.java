@@ -1,5 +1,6 @@
 package pe.edu.utp.blackdog.dao;
 
+import pe.edu.utp.blackdog.interfaces.GetAdmin;
 import pe.edu.utp.blackdog.util.DataAccessMariaDB;
 
 import javax.naming.NamingException;
@@ -8,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AdministradorDAO implements AutoCloseable{
+public class AdministradorDAO implements GetAdmin, AutoCloseable {
     private final Connection cnn;
 
     public AdministradorDAO() throws SQLException, NamingException {

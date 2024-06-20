@@ -17,12 +17,11 @@
 <section class="products" id="products">
     <div class="middle-text">
         <h4>Nuestros Productos</h4>
-        <h2>
-            <a href="${pageContext.request.contextPath}/menu?type=HAMBURGER">Hamburguesas</a> &nbsp; &nbsp;
-            <a href="${pageContext.request.contextPath}/menu?type=CHAUFA">Chaufas</a> &nbsp; &nbsp;
-            <a href="${pageContext.request.contextPath}/menu?type=SALCHIPAPA">Salchipapas</a> &nbsp; &nbsp;
-            <a href="${pageContext.request.contextPath}/menu?type=DRINK">Bebidas</a> &nbsp; &nbsp;
-        </h2>
+
+        <form><input type="text" value="HAMBURGER" hidden name="type"><button formaction="menu" formmethod="post" type="submit" class="btn-primary">Hamburguesas</button></form>
+        <form><input type="text" value="CHAUFA" hidden name="type"><button formaction="menu" formmethod="post" type="submit" class="btn-primary">Chaufas</button></form>
+        <form><input type="text" value="SALCHIPAPA" hidden name="type"><button formaction="menu" formmethod="post" type="submit" class="btn-primary">Salchipapas</button></form>
+        <form><input type="text" value="DRINK" hidden name="type"><button formaction="menu" formmethod="post" type="submit" class="btn-primary">Bebidas</button></form>
     </div>
 
     <jsp:include page="modal.jsp" />
@@ -71,7 +70,7 @@
 
             <img src="data:image/jpg;base64,<%= base64Image %>" class="card-img-top" alt="burger" width="<%=width%>" height="240px">
             <div class="card-body">
-                <form action="${pageContext.request.contextPath}/cart" method="post">
+                <form action="${pageContext.request.contextPath}/car" method="post">
                     <input type="hidden" name="action" value="add">
                     <h5 class="card-title"><%= product.getName() %></h5>
                     <h5 class="card-subtitle"><b>Precio: </b><%= product.getPrice() %></h5>
@@ -94,9 +93,6 @@
         <% } %>
     </section>
 
-    <form action="${pageContext.request.contextPath}/checkout" method="post">
-        <button class="btn btn-success" type="submit">Ver carrito</button>
-    </form>
 </section>
 
 <jsp:include page="components/footer.jsp" />
