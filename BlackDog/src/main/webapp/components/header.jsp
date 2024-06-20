@@ -86,6 +86,6 @@
         }
     %>
     <div class="nav-icons">
-        <a href="${pageContext.request.contextPath}/checkout" class="nav-link">Log in</a>
+        <a href="${pageContext.request.contextPath}/checkout" class="nav-link">Carrito</a>
     </div>
 </header>
