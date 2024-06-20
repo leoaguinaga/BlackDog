@@ -31,14 +31,14 @@ public class CheckoutServlet extends HttpServlet {
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("car");
+        Map<Long, Integer> car = (Map<Long, Integer>) session.getAttribute("car");
 
         try {
                 ProductDAO productDAO = new ProductDAO();
                 List<Product> productList = new ArrayList<>();
                 List<Integer> quantities = new ArrayList<>();
 
-                for (Map.Entry<Long, Integer> entry : cart.entrySet()) {
+                for (Map.Entry<Long, Integer> entry : car.entrySet()) {
                     Long productId = entry.getKey();
                     Integer quantity = entry.getValue();
                     Product product = productDAO.getProductById(productId);

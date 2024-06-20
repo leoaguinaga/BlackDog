@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Leo
-  Date: 20/06/2024
-  Time: 15:04
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% double amount = (double) request.getAttribute("amount"); %>
 <jsp:include page="components/head.jsp" />

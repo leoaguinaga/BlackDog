@@ -33,7 +33,7 @@ public class RegisterOrderServlet extends HttpServlet {
         String address = req.getParameter("address");
         Part filePart = req.getPart("evidence");
 
-        Map<Long, Integer> cart = (Map<Long, Integer>) session.getAttribute("cart");
+        Map<Long, Integer> car = (Map<Long, Integer>) session.getAttribute("car");
 
         BufferedImage evidence = ImageIO.read(filePart.getInputStream());
 
@@ -61,10 +61,10 @@ public class RegisterOrderServlet extends HttpServlet {
                 customer_orderDAO.registerOrder(customerOrder);
                 Customer_order co = customer_orderDAO.getLastCustomer_order();
 
-                if (cart != null && !cart.isEmpty()) {
-                    for (Map.Entry<Long, Integer> entry : cart.entrySet()) {
+                if (car != null && !car.isEmpty()) {
+                    for (Map.Entry<Long, Integer> entry : car.entrySet()) {
                         Long productId = entry.getKey();
-                        int quantity = entry.getValue();
+                        Integer quantity = entry.getValue();
 
                         Product product = productDAO.getProductById(productId);
 
