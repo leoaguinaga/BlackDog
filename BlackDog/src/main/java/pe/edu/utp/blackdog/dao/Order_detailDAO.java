@@ -20,10 +20,12 @@ public class Order_detailDAO implements AutoCloseable, Order_detailCrud {
         this.cnn = DataAccessMariaDB.getConnection(DataAccessMariaDB.TipoDA.DATASOURCE, "java:/MariaDB");
     }
 
+    @Override
     public void close() throws SQLException {
         if (this.cnn != null) DataAccessMariaDB.closeConnection(this.cnn);
     }
 
+    @Override
     public void registerOrder_detail(Order_detail orderDetail) throws SQLException, NamingException {
         String query = "INSERT INTO order_detail (customer_order, product_id, quantity) VALUES (?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -37,6 +39,7 @@ public class Order_detailDAO implements AutoCloseable, Order_detailCrud {
         }
     }
 
+    @Override
     public List<Order_detail> getAllOrder_details() throws SQLException, NamingException {
         List<Order_detail> orderDetails = new ArrayList<>();
         String query = "SELECT * FROM order_detail";
@@ -59,6 +62,7 @@ public class Order_detailDAO implements AutoCloseable, Order_detailCrud {
         return orderDetails;
     }
 
+    @Override
     public List<Order_detail> getOrderDetailsByOrderId(long customer_order_id) throws SQLException, NamingException {
         String query = "SELECT * FROM order_detail WHERE customer_order = ?";
         List<Order_detail> order_details = new ArrayList<>();
@@ -82,6 +86,7 @@ public class Order_detailDAO implements AutoCloseable, Order_detailCrud {
         return order_details;
     }
 
+    @Override
     public List<Order_detail> getOrderDetailsByProductId(long product_id) throws SQLException, NamingException {
         String query = "SELECT * FROM product WHERE product_id = ?";
         List<Order_detail> order_details = new ArrayList<>();

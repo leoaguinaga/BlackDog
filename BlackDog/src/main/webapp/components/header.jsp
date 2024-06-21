@@ -63,7 +63,7 @@
 
     <ul class="navlist">
         <li> <a href="index.jsp" class="active"> Home </a></li>
-        <li> <a href="#about"> About us </a></li>
+        <li> <a href="#about"> About_us </a></li>
         <li> <a href="menu"> Carta </a></li>
         <li> <a href="#"> Contactanos </a></li>
     </ul>

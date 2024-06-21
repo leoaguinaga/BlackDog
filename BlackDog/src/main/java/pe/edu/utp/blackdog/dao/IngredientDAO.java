@@ -20,10 +20,12 @@ public class IngredientDAO implements AutoCloseable, IngredientCrud {
         this.cnn = DataAccessMariaDB.getConnection(DataAccessMariaDB.TipoDA.DATASOURCE, "java:/MariaDB");
     }
 
+    @Override
     public void close() throws SQLException {
         if (this.cnn != null) DataAccessMariaDB.closeConnection(this.cnn);
     }
 
+    @Override
     public void registerIngredient(Ingredient ingredient) throws SQLException {
         String query = "INSERT INTO ingredient (name, price) VALUES (?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -36,6 +38,7 @@ public class IngredientDAO implements AutoCloseable, IngredientCrud {
         }
     }
 
+    @Override
     public List<Ingredient> getAllIngredients() throws SQLException {
         List<Ingredient> ingredients = new ArrayList<>();
         String query = "SELECT * FROM ingredient";
@@ -54,6 +57,7 @@ public class IngredientDAO implements AutoCloseable, IngredientCrud {
         return ingredients;
     }
 
+    @Override
     public Ingredient getIngredientById(long ingredient_id) throws SQLException {
         String query = "SELECT * FROM ingredient WHERE ingredient_id = ?";
         Ingredient ingredient = null;
@@ -75,6 +79,7 @@ public class IngredientDAO implements AutoCloseable, IngredientCrud {
         return ingredient;
     }
 
+    @Override
     public void updateIngredient(Ingredient ingredient, long ingredient_id) throws SQLException {
         String query = "UPDATE ingredient SET name = ?, price = ? WHERE ingredient_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -85,6 +90,7 @@ public class IngredientDAO implements AutoCloseable, IngredientCrud {
         }
     }
 
+    @Override
     public void deleteIngredient(long ingredient_id) throws SQLException {
         String query = "DELETE FROM ingredient WHERE ingredient_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -93,6 +99,7 @@ public class IngredientDAO implements AutoCloseable, IngredientCrud {
         }
     }
 
+    @Override
     public String getIngredientNameById(long ingredient_id) throws SQLException {
         String query = "SELECT name FROM ingredient WHERE ingredient_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {

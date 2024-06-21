@@ -17,10 +17,12 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
         this.cnn = DataAccessMariaDB.getConnection(DataAccessMariaDB.TipoDA.DATASOURCE, "java:/MariaDB");
     }
 
+    @Override
     public void close() throws SQLException {
         if (this.cnn != null) DataAccessMariaDB.closeConnection(this.cnn);
     }
 
+    @Override
     public void registerOrder(Customer_order customerOrder) throws SQLException {
         String query = "INSERT INTO customer_order (client_id, order_date, address, amount, state, evidence_image) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -37,6 +39,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
         }
     }
 
+    @Override
     public List<Customer_order> getAllOrders() throws SQLException, NamingException {
         List<Customer_order> customer_orders = new ArrayList<>();
         String query = "SELECT * FROM customer_order";
@@ -62,7 +65,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
         return customer_orders;
     }
 
-
+    @Override
     public List<Customer_order> getAllOnHoldOrders() throws SQLException, NamingException {
         List<Customer_order> customer_orders = new ArrayList<>();
         String query = "SELECT * FROM customer_order WHERE state = ?";
@@ -90,6 +93,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
         return customer_orders;
     }
 
+    @Override
     public Customer_order getOrderById(long customer_order_id) throws SQLException, NamingException {
         String query = "SELECT * FROM customer_order WHERE customer_order_id = ?";
         Customer_order customer_order = null;
@@ -116,6 +120,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
         return customer_order;
     }
 
+    @Override
     public void updateOrder(Customer_order customerOrder, long customer_order_id) throws SQLException {
         String query = "UPDATE customer_order SET client_id = ?, order_date = ?, address = ?, amount = ?, state = ?, evidence_image = ? WHERE customer_order_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -130,6 +135,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
         }
     }
 
+    @Override
     public void deleteOrder(long customer_order_id) throws SQLException {
         String query = "DELETE FROM customer_order WHERE customer_order_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -138,6 +144,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
         }
     }
 
+    @Override
     public Customer_order getLastCustomer_order() throws SQLException, NamingException {
         String query = "SELECT * FROM customer_order ORDER BY customer_order_id DESC LIMIT 1";
         Customer_order customer_order = null;

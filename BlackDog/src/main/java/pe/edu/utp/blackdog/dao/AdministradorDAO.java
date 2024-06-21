@@ -16,10 +16,12 @@ public class AdministradorDAO implements GetAdmin, AutoCloseable {
         this.cnn = DataAccessMariaDB.getConnection(DataAccessMariaDB.TipoDA.DATASOURCE, "java:/MariaDB");
     }
 
+    @Override
     public void close() throws SQLException {
         if (this.cnn != null) DataAccessMariaDB.closeConnection(this.cnn);
     }
 
+    @Override
     public String getAdministratorNameByEmail(String email) throws SQLException {
         String query = "SELECT * FROM administrator WHERE email = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {

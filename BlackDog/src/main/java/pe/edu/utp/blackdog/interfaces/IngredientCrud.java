@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IngredientCrud {
-    public void registerIngredient(Ingredient ingredient) throws SQLException;
+    void registerIngredient(Ingredient ingredient) throws SQLException;
 
-    public List<Ingredient> getAllIngredients() throws SQLException;
+    List<Ingredient> getAllIngredients() throws SQLException;
 
-    public Ingredient getIngredientById(long ingredient_id) throws SQLException;
+    Ingredient getIngredientById(long ingredient_id) throws SQLException;
 
-    public void updateIngredient(Ingredient ingredient, long ingredient_id) throws SQLException;
+    void updateIngredient(Ingredient ingredient, long ingredient_id) throws SQLException;
 
-    public void deleteIngredient(long ingredient_id) throws SQLException;
+    void deleteIngredient(long ingredient_id) throws SQLException;
 
-    public String getIngredientNameById(long ingredient_id) throws SQLException;
+    String getIngredientNameById(long ingredient_id) throws SQLException;
 }

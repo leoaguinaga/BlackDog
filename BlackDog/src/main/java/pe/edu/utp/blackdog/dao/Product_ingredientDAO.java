@@ -19,10 +19,12 @@ public class Product_ingredientDAO implements AutoCloseable, Product_IngredientC
         this.cnn = DataAccessMariaDB.getConnection(DataAccessMariaDB.TipoDA.DATASOURCE, "java:/MariaDB");
     }
 
+    @Override
     public void close() throws SQLException {
         if (this.cnn != null) DataAccessMariaDB.closeConnection(this.cnn);
     }
 
+    @Override
     public void registerProductIngredient(Product_ingredient productIngredient) throws SQLException, NamingException {
         String query = "INSERT INTO product_ingredient (product_id, ingredient_id, quantity) VALUES (?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -36,6 +38,7 @@ public class Product_ingredientDAO implements AutoCloseable, Product_IngredientC
         }
     }
 
+    @Override
     public List<Product_ingredient> getProductIngredients() throws SQLException, NamingException {
         List<Product_ingredient> productIngredients = new ArrayList<>();
         String query = "SELECT * FROM product_ingredient";
@@ -54,6 +57,7 @@ public class Product_ingredientDAO implements AutoCloseable, Product_IngredientC
         return productIngredients;
     }
 
+    @Override
     public List<Product_ingredient> getProductIngredientsByProductId(long product_id) throws SQLException, NamingException {
         String query = "SELECT * FROM product_ingredient WHERE product_id = ?";
         List<Product_ingredient> productIngredients = new ArrayList<>();
@@ -74,6 +78,7 @@ public class Product_ingredientDAO implements AutoCloseable, Product_IngredientC
         return productIngredients;
     }
 
+    @Override
     public Product_ingredient getProductIngredientByIngredientId(long ingredient_id) throws SQLException, NamingException {
         String query = "SELECT * FROM product_ingredient WHERE ingredient_id = ?";
         Product_ingredient productIngredient = null;
@@ -95,6 +100,7 @@ public class Product_ingredientDAO implements AutoCloseable, Product_IngredientC
         return productIngredient;
     }
 
+    @Override
     public void DeleteProductIngredient(long product_id) throws SQLException, NamingException {
         String query = "DELETE FROM product_ingredient WHERE product_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {

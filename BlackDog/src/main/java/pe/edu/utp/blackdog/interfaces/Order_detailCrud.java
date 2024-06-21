@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface Order_detailCrud {
-    public void registerOrder_detail(Order_detail orderDetail) throws SQLException, NamingException;
+    void registerOrder_detail(Order_detail orderDetail) throws SQLException, NamingException;
 
-    public List<Order_detail> getAllOrder_details() throws SQLException, NamingException;
+    List<Order_detail> getAllOrder_details() throws SQLException, NamingException;
 
-    public List<Order_detail> getOrderDetailsByOrderId(long customer_order_id) throws SQLException, NamingException;
+    List<Order_detail> getOrderDetailsByOrderId(long customer_order_id) throws SQLException, NamingException;
 
-    public List<Order_detail> getOrderDetailsByProductId(long product_id) throws SQLException, NamingException;
+    List<Order_detail> getOrderDetailsByProductId(long product_id) throws SQLException, NamingException;
 }

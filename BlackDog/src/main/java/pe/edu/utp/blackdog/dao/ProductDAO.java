@@ -22,6 +22,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
         if (this.cnn != null) DataAccessMariaDB.closeConnection(this.cnn);
     }
 
+    @Override
     public void registerProduct(Product product) throws SQLException {
         String query = "INSERT INTO product (name, image, price, type) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -36,6 +37,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
         }
     }
 
+    @Override
     public List<Product> getAllProducts() throws SQLException {
         List<Product> products = new ArrayList<>();
         String query = "SELECT * FROM product";
@@ -57,6 +59,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
         return products;
     }
 
+    @Override
     public List<Product> getProductsByType(Product_Type productType) throws SQLException {
         List<Product> products = new ArrayList<>();
         String query = "SELECT * FROM product WHERE type = ?";
@@ -77,6 +80,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
         return products;
     }
 
+    @Override
     public Product getProductById(long product_id) throws SQLException {
         String query = "SELECT * FROM product WHERE product_id = ?";
         Product product = null;
@@ -99,6 +103,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
         return product;
     }
 
+    @Override
     public void updateProduct(Product product, long product_id) throws SQLException {
         String query = "UPDATE product SET name = ?, image = ?, price = ?, type = ? WHERE product_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -111,6 +116,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
         }
     }
 
+    @Override
     public void deleteProduct(long product_id) throws SQLException {
         String query = "DELETE FROM product WHERE product_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -119,6 +125,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
         }
     }
 
+    @Override
     public Product getLastProduct() throws SQLException {
         String query = "SELECT * FROM product ORDER BY product_id DESC LIMIT 1";
         Product product = null;

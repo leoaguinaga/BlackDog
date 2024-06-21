@@ -20,10 +20,12 @@ public class ClientDAO implements AutoCloseable, ClientCrud {
         this.cnn = DataAccessMariaDB.getConnection(DataAccessMariaDB.TipoDA.DATASOURCE, "java:/MariaDB");
     }
 
+    @Override
     public void close() throws SQLException {
         if (this.cnn != null) DataAccessMariaDB.closeConnection(this.cnn);
     }
 
+    @Override
     public Client getClientByEmail(String email) throws SQLException {
         String query = "SELECT * FROM client WHERE email = ?";
         Client client = null;
@@ -47,6 +49,7 @@ public class ClientDAO implements AutoCloseable, ClientCrud {
         return client;
     }
 
+    @Override
     public void registerClient(Client client) throws SQLException {
         String query = "INSERT INTO client (first_name, last_name, phone_number, email, pwd) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -62,6 +65,7 @@ public class ClientDAO implements AutoCloseable, ClientCrud {
         }
     }
 
+    @Override
     public List<Client> getAllClients() throws SQLException {
         List<Client> clients = new ArrayList<>();
         String query = "SELECT * FROM client";
@@ -83,6 +87,7 @@ public class ClientDAO implements AutoCloseable, ClientCrud {
         return clients;
     }
 
+    @Override
     public Client getClientById(long client_id) throws SQLException {
         String query = "SELECT * FROM client WHERE client_id = ?";
         Client client = null;
@@ -107,6 +112,7 @@ public class ClientDAO implements AutoCloseable, ClientCrud {
         return client;
     }
 
+    @Override
     public void updateClient(Client client, long client_id) throws SQLException {
         String query = "UPDATE client SET first_name = ?, last_name = ?, phone_number = ?, email = ?, pwd = ? WHERE client_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
@@ -120,6 +126,7 @@ public class ClientDAO implements AutoCloseable, ClientCrud {
         }
     }
 
+    @Override
     public void deleteClient(long client_id) throws SQLException {
         String query = "DELETE FROM client WHERE client_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {

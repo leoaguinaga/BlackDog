@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface ClientCrud {
-    public void registerClient(Client client) throws SQLException;
+    void registerClient(Client client) throws SQLException;
 
-    public List<Client> getAllClients() throws SQLException;
+    List<Client> getAllClients() throws SQLException;
 
-    public void updateClient(Client client, long client_id) throws SQLException;
+    void updateClient(Client client, long client_id) throws SQLException;
 
-    public void deleteClient(long client_id) throws SQLException;
+    void deleteClient(long client_id) throws SQLException;
 
-    public Client getClientByEmail(String email) throws SQLException;
+    Client getClientByEmail(String email) throws SQLException;
     
-    public Client getClientById(long client_id) throws SQLException;
+    Client getClientById(long client_id) throws SQLException;
 }
