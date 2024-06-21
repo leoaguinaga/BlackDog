@@ -61,7 +61,7 @@ header{
 }
 
 .navlist{
-    display: flex;        
+    display: flex;
 }
 
 .navlist a {
@@ -77,9 +77,6 @@ header{
     color: var(--main-color);
 }
 
-.navlist a.active{
-    color: var(--main-color)
-}
 
 .nav-icons {
     display: flex;
@@ -142,7 +139,7 @@ section{
     height: auto;
     display: block;
     margin: 0 auto;
-    max-height: 550px;    
+    max-height: 550px;
 }
 
 .home-text h1{
