@@ -1,0 +1,9 @@
+# build
+**/target/
+**/out/
+
+# IntelliJ IDEA
+**/.idea/
+
+# VS Code
+**/.vscode/
