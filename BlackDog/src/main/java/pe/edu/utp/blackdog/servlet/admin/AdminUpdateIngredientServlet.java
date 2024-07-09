@@ -1,16 +1,14 @@
-package pe.edu.utp.blackdog.servlet;
+package pe.edu.utp.blackdog.servlet.admin;
 
 import pe.edu.utp.blackdog.dao.IngredientDAO;
 import pe.edu.utp.blackdog.model.Ingredient;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @WebServlet("/admin/updateIngredient")
 public class AdminUpdateIngredientServlet extends HttpServlet {

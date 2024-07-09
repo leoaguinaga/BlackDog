@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 public class Product {
     private long product_id;
     private String name;
-    private byte[] image;
+    private String image;
     private double price;
     private Product_Type product_type;
 
@@ -24,11 +24,11 @@ public class Product {
     public static class Builder {
         private long product_id;
         private String name;
-        private byte[] image;
+        private String image;
         private double price;
         private Product_Type product_type;
 
-        public Builder(String name, byte[] image, double price, Product_Type product_type) {
+        public Builder(String name, String image, double price, Product_Type product_type) {
             this.product_id = 0;
             this.name = name;
             this.image = image;
@@ -47,29 +47,16 @@ public class Product {
     // GETTERS
     public long getProduct_id() { return product_id; }
     public String getName() { return name; }
-    public byte[] getImage() { return image; }
+    public String getImage() { return image; }
     public double getPrice() { return price; }
     public Product_Type getProduct_type() { return product_type; }
 
-    public static byte[] imageToByteArray(BufferedImage image) throws IOException {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            ImageIO.write(image, "png", baos);
-            return baos.toByteArray();
-        }
+
+    public static Product createProductWithoutId(String name, String image, double price, Product_Type product_type) throws IOException {
+        return new Product.Builder(name, image, price, product_type).build();
     }
 
-    public static BufferedImage byteArrayToImage(byte[] bytes) throws IOException {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(bytes)) {
-            return ImageIO.read(bais);
-        }
-    }
-
-    public static Product createProductWithoutId(String name, BufferedImage image, double price, Product_Type product_type) throws IOException {
-        byte[] imageBytes = imageToByteArray(image);
-        return new Product.Builder(name, imageBytes, price, product_type).build();
-    }
-
-    public static Product createProduct(long product_id, String name, byte[] image, double price, Product_Type product_type) {
+    public static Product createProduct(long product_id, String name, String image, double price, Product_Type product_type) {
         return new Product.Builder(name, image, price, product_type).withProduct_id(product_id).build();
     }
 }

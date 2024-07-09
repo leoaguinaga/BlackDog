@@ -31,7 +31,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
             ps.setString(3, customerOrder.getAddress());
             ps.setDouble(4, customerOrder.getAmount());
             ps.setString(5, String.valueOf(customerOrder.getState()));
-            ps.setBytes(6, customerOrder.getEvidence_image());
+            ps.setString(6, customerOrder.getEvidence_image());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0) {
                 throw new SQLException("No se pudo registrar la orden en la base de datos.");
@@ -54,7 +54,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
                         rs.getString("address"),
                         rs.getDouble("amount"),
                         State.valueOf(rs.getString("state")),
-                        rs.getBytes("evidence_image")
+                        rs.getString("evidence_image")
                 ));
             }
             clientDAO.close();
@@ -81,7 +81,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
                             rs.getString("address"),
                             rs.getDouble("amount"),
                             State.valueOf(rs.getString("state")),
-                            rs.getBytes("evidence_image")
+                            rs.getString("evidence_image")
                     ));
                 }
                 clientDAO.close();
@@ -109,7 +109,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
                             rs.getString("address"),
                             rs.getDouble("amount"),
                             State.valueOf(rs.getString("state")),
-                            rs.getBytes("evidence_image")
+                            rs.getString("evidence_image")
                     );
                     clientDAO.close();
                 } else {
@@ -129,7 +129,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
             ps.setString(3, customerOrder.getAddress());
             ps.setDouble(4, customerOrder.getAmount());
             ps.setString(5, String.valueOf(customerOrder.getState()));
-            ps.setBytes(6, customerOrder.getEvidence_image());
+            ps.setString(6, customerOrder.getEvidence_image());
             ps.setLong(7, customer_order_id);
             ps.executeUpdate();
         }
@@ -159,7 +159,7 @@ public class Customer_orderDAO implements AutoCloseable, Customer_orderCrud {
                         rs.getString("address"),
                         rs.getDouble("amount"),
                         State.valueOf(rs.getString("state")),
-                        rs.getBytes("evidence_image")
+                        rs.getString("evidence_image")
                 );
             } else {
                 throw new SQLException("No se encontró el último producto en la base de datos.");

@@ -59,16 +59,11 @@
     <section class="list-products" id="list-products">
         <% if (products != null && !products.isEmpty()) {%>
         <% for (Product product : products) {
-            String base64Image = Base64.getEncoder().encodeToString(product.getImage());
             String ingredients = productIngredientsMap != null ? productIngredientsMap.get(product.getProduct_id()) : null;
-            String width;
-            if(product_type == Product_Type.DRINK) {
-                width = "50px";
-            }else width = "auto";
         %>
         <div class="card" style="width: 18rem;">
 
-            <img src="data:image/jpg;base64,<%= base64Image %>" class="card-img-top" alt="burger" width="<%=width%>" height="240px">
+            <div class="card-img"><img src="image?img=<%= product.getImage() %>" class="card-img-top" alt="Image" /></div>
             <div class="card-body">
                 <form action="${pageContext.request.contextPath}/car" method="post">
                     <input type="hidden" name="action" value="add">

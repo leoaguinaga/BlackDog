@@ -26,7 +26,6 @@
                 int quantity = quantities.get(i);
                 double productTotal = product.getPrice() * quantity;
                 totalPrice += productTotal;
-                String base64Image = Base64.getEncoder().encodeToString(product.getImage());
     %>
 
     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -44,7 +43,7 @@
         <tbody>
 
         <tr>
-            <td><img src="data:image/jpg;base64,<%= base64Image %>" alt="productImage" height="100px"/></td>
+            <td><img src="${pageContext.request.contextPath}/image?img=<%= product.getImage() %>" class="card-img-top" alt="Image" height="100px"/></td>
             <td><%= product.getName() %></td>
             <td><%= quantity %></td>
             <td><%= product.getPrice() %></td>

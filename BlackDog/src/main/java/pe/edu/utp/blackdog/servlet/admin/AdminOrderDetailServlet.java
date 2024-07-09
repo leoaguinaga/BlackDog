@@ -1,18 +1,16 @@
-package pe.edu.utp.blackdog.servlet;
+package pe.edu.utp.blackdog.servlet.admin;
 
 import pe.edu.utp.blackdog.dao.Customer_orderDAO;
 import pe.edu.utp.blackdog.dao.Order_detailDAO;
 import pe.edu.utp.blackdog.model.Customer_order;
 import pe.edu.utp.blackdog.model.Order_detail;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

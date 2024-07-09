@@ -8,6 +8,7 @@ import pe.edu.utp.blackdog.model.Client;
 import pe.edu.utp.blackdog.model.Customer_order;
 import pe.edu.utp.blackdog.model.Order_detail;
 import pe.edu.utp.blackdog.model.Product;
+import pe.edu.utp.blackdog.util.UTPBinary;
 
 import javax.imageio.ImageIO;
 import javax.naming.NamingException;
@@ -21,8 +22,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Map;
 
-@MultipartConfig
 @WebServlet("/registerOrder")
+@MultipartConfig
 public class RegisterOrderServlet extends HttpServlet {
 
     @Override
@@ -32,10 +33,9 @@ public class RegisterOrderServlet extends HttpServlet {
         double totalPrice = Double.parseDouble(req.getParameter("totalPrice"));
         String address = req.getParameter("address");
         Part filePart = req.getPart("evidence");
+        String evidence = "evidence"+LocalDateTime.now();
 
         Map<Long, Integer> car = (Map<Long, Integer>) session.getAttribute("car");
-
-        BufferedImage evidence = ImageIO.read(filePart.getInputStream());
 
         if (email_client==null){
             String msg = "Inicia sesión para poder registrar tu pedido";
@@ -60,6 +60,9 @@ public class RegisterOrderServlet extends HttpServlet {
                 // Registrar la orden en la base de datos
                 customer_orderDAO.registerOrder(customerOrder);
                 Customer_order co = customer_orderDAO.getLastCustomer_order();
+
+                byte[] fileContent = filePart.getInputStream().readAllBytes();
+                UTPBinary.echobin(fileContent, "/tmp/" + evidence);
 
                 if (car != null && !car.isEmpty()) {
                     for (Map.Entry<Long, Integer> entry : car.entrySet()) {

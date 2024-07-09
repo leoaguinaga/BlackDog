@@ -1,4 +1,4 @@
-package pe.edu.utp.blackdog.servlet;
+package pe.edu.utp.blackdog.servlet.admin;
 
 import pe.edu.utp.blackdog.dao.ProductDAO;
 import pe.edu.utp.blackdog.dao.Product_ingredientDAO;
@@ -30,15 +30,13 @@ public class AdminSetIngredientsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String name = req.getParameter("name");
         String type = req.getParameter("type");
-        String imageBase64 = req.getParameter("imageBase64");
+        String strImg = req.getParameter("img");
         double price = Double.parseDouble(req.getParameter("price"));
         String[] ingredientIds = req.getParameterValues("ingredientId");
 
-        byte[] imageBytes = Base64.getDecoder().decode(imageBase64);
-        BufferedImage bufferedImage = Product.byteArrayToImage(imageBytes);
 
         try {
-            Product product = Product.createProductWithoutId(name, bufferedImage, price, Product_Type.valueOf(type));
+            Product product = Product.createProductWithoutId(name, strImg, price, Product_Type.valueOf(type));
 
             ProductDAO productDAO = new ProductDAO();
             productDAO.registerProduct(product);
@@ -65,7 +63,7 @@ public class AdminSetIngredientsServlet extends HttpServlet {
 
             productIngredientDAO.close();
 
-            resp.sendRedirect("products.jsp");
+            resp.sendRedirect("products");
         } catch (Exception e) {
             String msg = "No se agregaron los ingredientes al producto";
             req.setAttribute("message", msg + ". " + e.getMessage());

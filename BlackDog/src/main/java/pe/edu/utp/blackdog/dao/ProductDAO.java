@@ -27,7 +27,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
         String query = "INSERT INTO product (name, image, price, type) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, product.getName());
-            ps.setBytes(2, product.getImage());
+            ps.setString(2, product.getImage());
             ps.setDouble(3, product.getPrice());
             ps.setString(4, product.getProduct_type().toString());
             int rowsAffected = ps.executeUpdate();
@@ -47,7 +47,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
                 products.add(Product.createProduct(
                         rs.getLong("product_id"),
                         rs.getString("name"),
-                        rs.getBytes("image"),
+                        rs.getString("image"),
                         rs.getDouble("price"),
                         Product_Type.valueOf(rs.getString("type"))
                 ));
@@ -70,7 +70,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
                     products.add(Product.createProduct(
                             rs.getLong("product_id"),
                             rs.getString("name"),
-                            rs.getBytes("image"),
+                            rs.getString("image"),
                             rs.getDouble("price"),
                             Product_Type.valueOf(rs.getString("type"))
                     ));
@@ -91,7 +91,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
                     product = Product.createProduct(
                             rs.getLong("product_id"),
                             rs.getString("name"),
-                            rs.getBytes("image"),
+                            rs.getString("image"),
                             rs.getDouble("price"),
                             Product_Type.valueOf(rs.getString("type"))
                     );
@@ -108,7 +108,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
         String query = "UPDATE product SET name = ?, image = ?, price = ?, type = ? WHERE product_id = ?";
         try (PreparedStatement ps = cnn.prepareStatement(query)) {
             ps.setString(1, product.getName());
-            ps.setBytes(2, product.getImage());
+            ps.setString(2, product.getImage());
             ps.setDouble(3, product.getPrice());
             ps.setString(4, product.getProduct_type().toString());
             ps.setLong(5, product_id);
@@ -135,7 +135,7 @@ public class ProductDAO implements AutoCloseable, ProductCrud {
                 product = Product.createProduct(
                         rs.getLong("product_id"),
                         rs.getString("name"),
-                        rs.getBytes("image"),
+                        rs.getString("image"),
                         rs.getDouble("price"),
                         Product_Type.valueOf(rs.getString("type"))
                 );

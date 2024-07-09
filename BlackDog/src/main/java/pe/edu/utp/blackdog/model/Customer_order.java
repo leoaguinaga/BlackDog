@@ -1,8 +1,5 @@
 package pe.edu.utp.blackdog.model;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +11,7 @@ public class Customer_order {
     private String address;
     private double amount;
     private State state;
-    private byte[] evidence_image;
+    private String evidence_image;
 
     public Customer_order(Builder builder) {
         this.customer_order_id = builder.customer_order_id;
@@ -34,9 +31,9 @@ public class Customer_order {
         private String address;
         private double amount;
         private State state;
-        private byte[] evidence_image;
+        private String evidence_image;
 
-        public Builder(Client client, LocalDateTime order_date, String address, double amount, State state, byte[] evidence_image) {
+        public Builder(Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image) {
             this.customer_order_id = 0;
             this.client = client;
             this.order_date = order_date;
@@ -72,7 +69,7 @@ public class Customer_order {
     public State getState() {
         return state;
     }
-    public byte[] getEvidence_image() { return evidence_image;}
+    public String getEvidence_image() { return evidence_image;}
     public LocalDateTime getOrder_date() { return order_date;}
 
     public String getOrderDateTime() {
@@ -90,19 +87,11 @@ public class Customer_order {
         return order_date.format(formatter);
     }
 
-    public static byte[] imageToByteArray(BufferedImage image) throws IOException {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            ImageIO.write(image, "png", baos);
-            return baos.toByteArray();
-        }
-    }
-
     // CREATE ORDER
-    public static Customer_order createOrderWithoutId(Client client, LocalDateTime order_date, String address, double amount, BufferedImage evidence_image) throws IOException {
-        byte[] imageBytes = imageToByteArray(evidence_image);
-        return new Customer_order.Builder(client,order_date,address,amount, State.ON_HOLD, imageBytes).build();
+    public static Customer_order createOrderWithoutId(Client client, LocalDateTime order_date, String address, double amount, String evidence_image) throws IOException {
+        return new Customer_order.Builder(client,order_date,address,amount, State.ON_HOLD, evidence_image).build();
     }
-    public static Customer_order createOrder(long customer_order_id, Client client, LocalDateTime order_date, String address, double amount, State state, byte[] evidence_image){
+    public static Customer_order createOrder(long customer_order_id, Client client, LocalDateTime order_date, String address, double amount, State state, String evidence_image){
         return new Customer_order.Builder(client,order_date,address,amount,state,evidence_image).withCustomer_oder_id(customer_order_id).build();
     }
 

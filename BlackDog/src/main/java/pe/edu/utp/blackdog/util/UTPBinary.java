@@ -70,6 +70,10 @@ public class UTPBinary {
         }
     }
 
+    public static void writeFile(byte[] data, String filename) throws IOException {
+        echobin(data, filename);
+    }
+
     public static byte[] int2Bytes(int val){
         // Crear un byte buffer de 4 bytes
         // (el tipo int tiene un tamaño de 4 bytes)

@@ -1,4 +1,4 @@
-package pe.edu.utp.blackdog.servlet;
+package pe.edu.utp.blackdog.servlet.admin;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

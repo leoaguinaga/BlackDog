@@ -6,7 +6,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<Order_detail> order_detailList = (List<Order_detail>) request.getAttribute("order_detailList"); %>
 <% Customer_order customer_order = (Customer_order) request.getAttribute("customer_order"); %>
-<% String base64Evidence = Base64.getEncoder().encodeToString(customer_order.getEvidence_image());%>
 
 <jsp:include page="components/header.jsp" />
 <jsp:include page="components/sidebar.jsp" />
@@ -38,9 +37,8 @@
                     </tr>
                     </thead>
                     <% for (Order_detail orderDetail : order_detailList) { %>
-                    <%String base64Product = Base64.getEncoder().encodeToString(orderDetail.getProduct().getImage());%>
                     <tr>
-                        <td><img src="data:image/jpg;base64,<%= base64Product %>" alt="productImage" height="100px"/></td>
+                        <td><img src="${pageContext.request.contextPath}/image?img=<%= orderDetail.getProduct().getImage() %>" class="card-img-top" alt="Image" height="100px"/></td>
                         <td><%= orderDetail.getProduct().getName()%></td>
                         <td><%= orderDetail.getQuantity()%></td>
                     </tr>
@@ -56,18 +54,32 @@
                     </tr>
                     </tfoot>
                 </table>
-                <% if (customer_order.getState()!=State.FINISHED){%>
-                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=ON_PROCESS&id=<%= customer_order.getCustomer_order_id() %>">Aceptar</a>
+
+                <%
+                    State currentState = customer_order.getState();
+                    if (currentState == State.ON_HOLD) {
+                %>
+                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=ON_PROCESS&id=<%= customer_order.getCustomer_order_id() %>">Preparar pedido</a>
                 <br>
-                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=CANCELED&id=<%= customer_order.getCustomer_order_id() %>">Cancelar</a>
+                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=CANCELED&id=<%= customer_order.getCustomer_order_id() %>">Cancelar pedido</a>
                 <br>
-                <% if (customer_order.getState()==State.ON_PROCESS){%>
-                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=FINISHED&id=<%= customer_order.getCustomer_order_id() %>">Finalizar</a>
-                <%}%>
-                <%}%>
+                <%
+                } else if (currentState == State.ON_PROCESS) {
+                %>
+                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=ON_THE_WAY&id=<%= customer_order.getCustomer_order_id() %>">Pedido en camino</a>
                 <br>
+                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=CANCELED&id=<%= customer_order.getCustomer_order_id() %>">Cancelar pedido</a>
+                <br>
+                <%
+                } else if (currentState == State.ON_THE_WAY) {
+                %>
+                <a href="${pageContext.request.contextPath}/admin/alterStateOrder?state=FINISHED&id=<%= customer_order.getCustomer_order_id() %>">Entregado/Finalizar</a>
+                <br>
+                <%
+                    }
+                %>
                 <strong>Evidencia de pago: </strong>
-                <img src="data:image/jpg;base64,<%= base64Evidence %>" alt="productImage" height="300px"/>
+                <img src="${pageContext.request.contextPath}/image?img=<%= customer_order.getEvidence_image() %>" class="card-img-top" alt="Image" height="150px" width="80px"/>
             </div>
         </div>
     </div>

@@ -29,14 +29,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <% for (Product product : products) {
-                        String base64Image = Base64.getEncoder().encodeToString(product.getImage());%>
+                    <% for (Product product : products) {%>
                     <tr>
                         <td><%= product.getProduct_id() %></td>
                         <td><%= product.getName()%></td>
                         <td><%= product.getPrice() %></td>
                         <td><%= product.getProduct_type().getDisplayName() %></td>
-                        <td><img src="data:image/jpg;base64,<%= base64Image %>" alt="productImage" height="100px"/></td>
+                        <td><img src="${pageContext.request.contextPath}/image?img=<%= product.getImage() %>" class="card-img-top" alt="Image" height="100px"/></td>
                         <td> <a href="${pageContext.request.contextPath}/admin/seeProductIngredients?id=<%= product.getProduct_id() %>"> Ingredientes</a> </td>
                         <td>
                             <a href="${pageContext.request.contextPath}/admin/deleteProduct?id=<%= product.getProduct_id() %>"><img src="img/borrar.png" alt="delete image" height="30px"></a>

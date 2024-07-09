@@ -1,4 +1,4 @@
-package pe.edu.utp.blackdog.servlet;
+package pe.edu.utp.blackdog.servlet.admin;
 
 import pe.edu.utp.blackdog.dao.ProductDAO;
 import pe.edu.utp.blackdog.model.Product;

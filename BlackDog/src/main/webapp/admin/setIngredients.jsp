@@ -28,7 +28,7 @@
             </div>
 
             <div>
-                <input type="hidden" id="imageBase64" name="imageBase64" value="<%=request.getAttribute("imageBase64")%>">
+                <input type="hidden" id="img" name="img" value="<%=product.getImage()%>">
             </div>
 
             <div>
